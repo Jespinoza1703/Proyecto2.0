@@ -10,6 +10,10 @@ from tkinter import *
 import os
 import pygame
 
+TIEMPO_NIVEL1 = 0.1
+TIEMPO_NIVEL2 = 0.07
+TIEMPO_NIVEL3 = 0.04
+
 # Matriz con lista de textos en ingles y español
 traduccion =[["1 Paleta IA", "1 Racket AI"], #0
                ["2 Paletas IA", "2 Rackets AI"],#1
@@ -60,7 +64,7 @@ def loadPicture(name):
 def playMusic():
 	pygame.mixer.Sound(os.path.join("sounds", "music.ogg")).play(loops = -1)
 
-playMusic()
+#playMusic()
 
 # Carga de imagenes
 racket1cpuicon = loadPicture("1racketcpu.gif")
@@ -156,6 +160,8 @@ def help_ventana():
 	instructionstitle = Label(helpventana, text = "Instructions/Instrucciones", font = "Helvetica 28")
 	instructionstitle.place(x = 240, y = 40)
 
+	
+
 	# Instrucciones, texto
 	instructions = Label(helpventana, text = "P1 press W key to go up and S to go down.\
 P2 UP key and DOWN\nkey. I don't really think I have to explain it further.\n1. \
@@ -171,13 +177,100 @@ justify = LEFT, font = "Helvetica 18")
 
 	instructionsesp.place(x = 40, y = 315)
 
-	# Para ir atras en el menu
 	def back(): 
 		helpventana.destroy()
 		ventana.deiconify()
 
 	backbutton = Button(helpcanvas, image = backicon, command = back)
 	backbutton.place(x = 20, y = 20)
+
+
+def ventana_practica():
+	ventana.withdraw()
+	modo_practica = Toplevel()
+	modo_practica.title("About")
+	modo_practica.minsize(800, 500)
+	modo_practica.resizable(width = NO, height = NO)
+
+	def practica9_tiempo1():
+		ventana.withdraw()
+		juego = Juego("Single", 1, "practica", tamaño=9, time=TIEMPO_NIVEL1)
+		juego.jugar()	
+
+	def practica9_tiempo2():
+		ventana.withdraw()
+		juego = Juego("Single", 1, "practica", tamaño=9, time=TIEMPO_NIVEL2)
+		juego.jugar()	
+
+	def practica9_tiempo3():
+		ventana.withdraw()
+		juego = Juego("Single", 1, "practica", tamaño=9, time=TIEMPO_NIVEL3)
+		juego.jugar()	
+
+	def practica6_tiempo1():
+		ventana.withdraw()
+		juego = Juego("Single", 1, "practica", tamaño=6, time=TIEMPO_NIVEL1)
+		juego.jugar()
+
+	def practica6_tiempo2():
+		ventana.withdraw()
+		juego = Juego("Single", 1, "practica", tamaño=6, time=TIEMPO_NIVEL2)
+		juego.jugar()
+
+	def practica6_tiempo3():
+		ventana.withdraw()
+		juego = Juego("Single", 1, "practica", tamaño=6, time=TIEMPO_NIVEL3)
+		juego.jugar()
+
+	def practica3_tiempo1():
+		ventana.withdraw()
+		juego = Juego("Single", 1, "practica", tamaño=3, time=TIEMPO_NIVEL1)
+		juego.jugar()
+
+	def practica3_tiempo2():
+		ventana.withdraw()
+		juego = Juego("Single", 1, "practica", tamaño=3, time=TIEMPO_NIVEL2)
+		juego.jugar()
+
+	def practica3_tiempo3():
+		ventana.withdraw()
+		juego = Juego("Single", 1, "practica", tamaño=3, time=TIEMPO_NIVEL3)
+		juego.jugar()
+
+	label9 = Label(modo_practica, text="9", font = "Helvetica 45")
+	label9.place(x=100, y=80)
+	label6 = Label(modo_practica, text="6", font = "Helvetica 45")
+	label6.place(x=100, y=180)
+	label3 = Label(modo_practica, text="3", font = "Helvetica 45")
+	label3.place(x=100, y=280)
+
+	btn9_timepo1 = Button(modo_practica, text= "TIEMPO_NIVEL1", command = practica9_tiempo1)
+	btn9_timepo1.place(x = 200, y = 100)
+	btn9_timepo2 = Button(modo_practica, text= "TIEMPO_NIVEL2", command = practica9_tiempo2)
+	btn9_timepo2.place(x = 400, y = 100)
+	btn9_timepo3 = Button(modo_practica, text= "TIEMPO_NIVEL3", command = practica9_tiempo3)
+	btn9_timepo3.place(x = 600, y = 100)
+	btn6_timepo1 = Button(modo_practica, text= "TIEMPO_NIVEL1", command = practica6_tiempo1)
+	btn6_timepo1.place(x = 200, y = 200)
+	btn6_timepo2 = Button(modo_practica, text= "TIEMPO_NIVEL2", command = practica6_tiempo2)
+	btn6_timepo2.place(x = 400, y = 200)
+	btn6_timepo3 = Button(modo_practica, text= "TIEMPO_NIVEL3", command = practica6_tiempo3)
+	btn6_timepo3.place(x = 600, y = 200)
+	btn3_timepo1 = Button(modo_practica, text= "TIEMPO_NIVEL1", command = practica3_tiempo1)
+	btn3_timepo1.place(x = 200, y = 300)
+	btn3_timepo2 = Button(modo_practica, text= "TIEMPO_NIVEL2", command = practica3_tiempo2)
+	btn3_timepo2.place(x = 400, y = 300)
+	btn3_timepo3 = Button(modo_practica, text= "TIEMPO_NIVEL3", command = practica3_tiempo3)
+	btn3_timepo3.place(x = 600, y = 300)
+
+	def back():
+		modo_practica.destroy()
+		ventana.deiconify()
+
+	backbutton = Button(modo_practica, image = backicon, command = back)
+	backbutton.place(x = 20, y = 20)
+	# Para ir atras en el menu
+
 
 # Textos e imagenes de menu
 mainlogo_label = Label(ventana, image = mainlogo)
@@ -210,5 +303,6 @@ help_button = Button(ventana, image = helpicon, command = help_ventana)
 help_button.place(x = 50, y = 300)
 imagen_idioma = Button(ventana, image=imagenes[0][IDIOMA], font = "Helvetica 16", command = cambiarIdioma)
 imagen_idioma.place(x = 600, y = 40)
-
+btn_practica = Button(ventana, text="Modo Práctica", command = ventana_practica)
+btn_practica.place(x=530, y=420)
 mainloop()
