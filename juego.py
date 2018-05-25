@@ -46,7 +46,7 @@ TAMAÑO_BARRA_PRACTICA = 25
 
 # Clase Juego que controla las mecanicas de juego
 class Juego:
-	def __init__(self, modo, nivel, versus, tamaño=TAMAÑO_BARRA_1, time=TIEMPO_NIVEL1):
+	def __init__(self, modo, nivel, versus, tamaño=None, time=TIEMPO_NIVEL1):
 		pygame.init()
 		self.pantalla = pygame.display.set_mode((ANCHO,LARGO))
 		pygame.display.set_caption("Pong")
@@ -184,12 +184,13 @@ class Juego:
 			else:
 				if self.nivel == 1:
 					self.tiempo = self.time
-					if self.modo == "Single":
-						self.barra1 = Barra(1,2,self.tamaño) 
-						self.barra2 = Barra(39,0,TAMAÑO_BARRA_PRACTICA)
-					else:
-						self.barra1 = Barra_doble(1,3,7,13,self.tamaño)
-						self.barra2 = Barra(39,0,TAMAÑO_BARRA_PRACTICA)
+					if self.tamaño != None:
+						if self.modo == "Single":
+							self.barra1 = Barra(1,2,self.tamaño) 
+							self.barra2 = Barra(39,0,TAMAÑO_BARRA_PRACTICA)
+						else:
+							self.barra1 = Barra_doble(1,3,7,13,self.tamaño)
+							self.barra2 = Barra(39,0,TAMAÑO_BARRA_PRACTICA)
 
 			# Eventos de las teclas
 			for event in pygame.event.get():
