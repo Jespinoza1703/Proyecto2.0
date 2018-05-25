@@ -85,7 +85,7 @@ class Juego:
 					# La primer barra es la de la izquiera, la otra la de la derecha
 					if self.tamaño == None:
 						self.barra1 = Barra_doble(1,3,9,13,TAMAÑO_BARRA_1)
-						self.barra2 = Barra_doble(38,12,30,3,TAMAÑO_BARRA_1)
+						self.barra2 = Barra_doble(38,12,32,3,TAMAÑO_BARRA_1)
 					else:
 						self.barra1 = Barra_doble(1,3,9,13,TAMAÑO_BARRA_1) 
 						self.barra2 = Barra(39,0,self.tamaño)
@@ -157,7 +157,7 @@ class Juego:
 							self.barra2 = Barra(38,2,TAMAÑO_BARRA_1)
 						else:
 							self.barra1 = Barra_doble(1,3,9,13,TAMAÑO_BARRA_1)
-							self.barra2 = Barra_doble(38,12,30,3,TAMAÑO_BARRA_1)
+							self.barra2 = Barra_doble(38,12,32,3,TAMAÑO_BARRA_1)
 					if self.nivel == 2:
 						self.tiempo = TIEMPO_NIVEL2
 						if self.modo == "Single":
@@ -165,7 +165,7 @@ class Juego:
 							self.barra2 = Barra(38,2,TAMAÑO_BARRA_2)
 						else:
 							self.barra1 = Barra_doble(1,3,9,13,TAMAÑO_BARRA_2)
-							self.barra2 = Barra_doble(38,12,30,3,TAMAÑO_BARRA_2)
+							self.barra2 = Barra_doble(38,12,32,3,TAMAÑO_BARRA_2)
 
 					if self.nivel == 3:
 						self.tiempo = TIEMPO_NIVEL3
@@ -174,7 +174,7 @@ class Juego:
 							self.barra2 = Barra(38,2,TAMAÑO_BARRA_3)
 						else:
 							self.barra1 = Barra_doble(1,3,9,13,TAMAÑO_BARRA_3)
-							self.barra2 = Barra_doble(38,12,30,3,TAMAÑO_BARRA_3)
+							self.barra2 = Barra_doble(38,12,32,3,TAMAÑO_BARRA_3)
 
 					# Si pierde en el nivel 3, vuelve al nivel 1
 					if self.nivel == 4:
@@ -188,7 +188,7 @@ class Juego:
 						self.barra1 = Barra(1,2,self.tamaño) 
 						self.barra2 = Barra(39,0,TAMAÑO_BARRA_PRACTICA)
 					else:
-						self.barra1 = Barra_doble(1,3,9,13,self.tamaño)
+						self.barra1 = Barra_doble(1,3,7,13,self.tamaño)
 						self.barra2 = Barra(39,0,TAMAÑO_BARRA_PRACTICA)
 
 			# Eventos de las teclas
