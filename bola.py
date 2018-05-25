@@ -74,6 +74,18 @@ class Bola:
 		# Si llega al final y el siguiente es blanco, rebote
 		elif self.x == 37 and matriz[self.y][self.x + 1] == 1: 
 			pygame.mixer.Sound(os.path.join('sounds', 'bounce.wav')).play()
+			# Si paleta es mayor a 9
+			if matriz[self.y - 6][self.x + 1] == 1 or matriz[self.y + 6][self.y + 1] == 1:
+				print("WWWERTYULFDSAZVBN;MNBFDSDUIKJHAZXCV;SO")
+				if matriz[self.y - 5][self.x + 1] == 0:
+					self.direccion = random.randrange(-1, 2)
+					self.derecha = False
+				elif matriz[self.y + 1][self.x + 1] == 0:
+					self.direccion = random.randrange(-1, 2)
+					self.derecha = False
+				else:
+					self.direccion = random.randrange(-1, 2)
+					self.derecha = False
 			# Revisa si paleta es de 3
 			if matriz[self.y - 3][self.x + 1] == 0 and matriz[self.y + 3][self.x + 1] == 0: 
 				if matriz[self.y - 1][self.x + 1] == 0:
@@ -143,9 +155,7 @@ class Bola:
 				else:
 					self.direccion = 0
 					self.derecha = False
-			if matriz[self.y - 6][self.x + 1] == 1 or matriz[self.y + 6][self.y + 1] == 1:
-				self.direccion = random.randrange(-1, 2)
-				self.derecha = False
+
 		# Si llega al principio y el siguiente cuadro es negro, rebote
 		elif self.x == 2 and matriz[self.y][self.x -1] == 0: 
 			pygame.mixer.Sound(os.path.join('sounds', 'fail.wav')).play()
@@ -234,65 +244,65 @@ class Bola:
 				self.x += self.vx
 				self.y += self.vy
 				matriz[self.y][self.x] = 1
-				print(1)
-				print('direccion: '+str(self.direccion))
-				print('derecha: '+str(self.derecha))
-				print('x: '+str(self.x))
-				print('y: '+str(self.y))
-				print('score1: '+str(self.score1))
-				print('score2: '+str(self.score2))
+				#print(1)
+				#print('direccion: '+str(self.direccion))
+				#print('derecha: '+str(self.derecha))
+				#print('x: '+str(self.x))
+				#print('y: '+str(self.y))
+				#print('score1: '+str(self.score1))
+				#print('score2: '+str(self.score2))
 			elif self.direccion == 1:
 				self.x += self.vx
 				self.y -= self.vy 
-				print(2)
-				print('direccion: '+str(self.direccion))
-				print('derecha: '+str(self.derecha))
-				print('x: '+str(self.x))
-				print('y: '+str(self.y))
-				print('score1: '+str(self.score1))
-				print('score2: '+str(self.score2))
+				#print(2)
+				#print('direccion: '+str(self.direccion))
+				#print('derecha: '+str(self.derecha))
+				#print('x: '+str(self.x))
+				#print('y: '+str(self.y))
+				#print('score1: '+str(self.score1))
+				#print('score2: '+str(self.score2))
 				matriz[self.y][self.x] = 1
 			elif self.direccion == 0:
 				self.x += self.vx
 				matriz[self.y][self.x] = 1
-				print(3)
-				print('direccion: '+str(self.direccion))
-				print('derecha: '+str(self.derecha))
-				print('x: '+str(self.x))
-				print('y: '+str(self.y))
-				print('score1: '+str(self.score1))
-				print('score2: '+str(self.score2))
+				#print(3)
+				#print('direccion: '+str(self.direccion))
+				#print('derecha: '+str(self.derecha))
+				#print('x: '+str(self.x))
+				#print('y: '+str(self.y))
+				#print('score1: '+str(self.score1))
+				#print('score2: '+str(self.score2))
 		# Si derecha es false, o sea hacia la izquierda
 		elif self.derecha == False and self.x > 0: 
 			if self.direccion == -1:
 				self.x -= self.vx
 				self.y += self.vy
 				matriz[self.y][self.x] = 1
-				print(4)
-				print('direccion: '+str(self.direccion))
-				print('derecha: '+str(self.derecha))
-				print('x: '+str(self.x))
-				print('y: '+str(self.y))
-				print('score1: '+str(self.score1))
-				print('score2: '+str(self.score2))
+				#print(4)
+				#print('direccion: '+str(self.direccion))
+				#print('derecha: '+str(self.derecha))
+				#print('x: '+str(self.x))
+				#print('y: '+str(self.y))
+				#print('score1: '+str(self.score1))
+				#print('score2: '+str(self.score2))
 			elif self.direccion == 1:
 				self.x -= self.vx
 				self.y -= self.vy 
-				print(5)
-				print('direccion: '+str(self.direccion))
-				print('derecha: '+str(self.derecha))
-				print('x: '+str(self.x))
-				print('y: '+str(self.y))
-				print('score1: '+str(self.score1))
-				print('score2: '+str(self.score2))
+				#print(5)
+				#print('direccion: '+str(self.direccion))
+				#print('derecha: '+str(self.derecha))
+				#print('x: '+str(self.x))
+				#print('y: '+str(self.y))
+				#print('score1: '+str(self.score1))
+				#print('score2: '+str(self.score2))
 				matriz[self.y][self.x] = 1
 			elif self.direccion == 0:
 				self.x -= self.vx
 				matriz[self.y][self.x] = 1
-				print(6)
-				print('direccion: '+str(self.direccion))
-				print('derecha: '+str(self.derecha))
-				print('x: '+str(self.x))
-				print('y: '+str(self.y))
-				print('score1: '+str(self.score1))
-				print('score2: '+str(self.score2))
+				#print(6)
+				#print('direccion: '+str(self.direccion))
+				#print('derecha: '+str(self.derecha))
+				#print('x: '+str(self.x))
+				#print('y: '+str(self.y))
+				#print('score1: '+str(self.score1))
+				#print('score2: '+str(self.score2))
