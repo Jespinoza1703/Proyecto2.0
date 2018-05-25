@@ -192,49 +192,85 @@ def ventana_practica():
 	modo_practica.minsize(800, 500)
 	modo_practica.resizable(width = NO, height = NO)
 
-	def practica9_tiempo1():
+	def practica9_tiempo1_S():
 		ventana.withdraw()
 		juego = Juego("Single", 1, "practica", tamaño=9, time=TIEMPO_NIVEL1)
 		juego.jugar()	
+	def practica9_tiempo1_D():
+		ventana.withdraw()
+		juego = Juego("Double", 1, "practica", tamaño=9, time=TIEMPO_NIVEL1)
+		juego.jugar()	
 
-	def practica9_tiempo2():
+	def practica9_tiempo2_S():
 		ventana.withdraw()
 		juego = Juego("Single", 1, "practica", tamaño=9, time=TIEMPO_NIVEL2)
+		juego.jugar()
+	def practica9_tiempo2_D():
+		ventana.withdraw()
+		juego = Juego("Double", 1, "practica", tamaño=9, time=TIEMPO_NIVEL2)
 		juego.jugar()	
 
-	def practica9_tiempo3():
+	def practica9_tiempo3_S():
 		ventana.withdraw()
 		juego = Juego("Single", 1, "practica", tamaño=9, time=TIEMPO_NIVEL3)
+		juego.jugar()
+	def practica9_tiempo3_D():
+		ventana.withdraw()
+		juego = Juego("Double", 1, "practica", tamaño=9, time=TIEMPO_NIVEL3)
 		juego.jugar()	
 
-	def practica6_tiempo1():
+	def practica6_tiempo1_S():
 		ventana.withdraw()
 		juego = Juego("Single", 1, "practica", tamaño=6, time=TIEMPO_NIVEL1)
 		juego.jugar()
+	def practica6_tiempo1_D():
+		ventana.withdraw()
+		juego = Juego("Double", 1, "practica", tamaño=6, time=TIEMPO_NIVEL1)
+		juego.jugar()
 
-	def practica6_tiempo2():
+	def practica6_tiempo2_S():
 		ventana.withdraw()
 		juego = Juego("Single", 1, "practica", tamaño=6, time=TIEMPO_NIVEL2)
 		juego.jugar()
+	def practica6_tiempo2_D():
+		ventana.withdraw()
+		juego = Juego("Double", 1, "practica", tamaño=6, time=TIEMPO_NIVEL2)
+		juego.jugar()
 
-	def practica6_tiempo3():
+	def practica6_tiempo3_S():
+		ventana.withdraw()
+		juego = Juego("Single", 1, "practica", tamaño=6, time=TIEMPO_NIVEL3)
+		juego.jugar()
+	def practica6_tiempo3_D():
 		ventana.withdraw()
 		juego = Juego("Single", 1, "practica", tamaño=6, time=TIEMPO_NIVEL3)
 		juego.jugar()
 
-	def practica3_tiempo1():
+	def practica3_tiempo1_S():
 		ventana.withdraw()
 		juego = Juego("Single", 1, "practica", tamaño=3, time=TIEMPO_NIVEL1)
 		juego.jugar()
+	def practica3_tiempo1_D():
+		ventana.withdraw()
+		juego = Juego("Double", 1, "practica", tamaño=3, time=TIEMPO_NIVEL1)
+		juego.jugar()
 
-	def practica3_tiempo2():
+	def practica3_tiempo2_S():
 		ventana.withdraw()
 		juego = Juego("Single", 1, "practica", tamaño=3, time=TIEMPO_NIVEL2)
 		juego.jugar()
+	def practica3_tiempo2_D():
+		ventana.withdraw()
+		juego = Juego("Double", 1, "practica", tamaño=3, time=TIEMPO_NIVEL2)
+		juego.jugar()
 
-	def practica3_tiempo3():
+	def practica3_tiempo3_S():
 		ventana.withdraw()
 		juego = Juego("Single", 1, "practica", tamaño=3, time=TIEMPO_NIVEL3)
+		juego.jugar()
+	def practica3_tiempo3_D():
+		ventana.withdraw()
+		juego = Juego("Double", 1, "practica", tamaño=3, time=TIEMPO_NIVEL3)
 		juego.jugar()
 
 	label9 = Label(modo_practica, text="9", font = "Helvetica 45")
@@ -244,24 +280,42 @@ def ventana_practica():
 	label3 = Label(modo_practica, text="3", font = "Helvetica 45")
 	label3.place(x=100, y=280)
 
-	btn9_timepo1 = Button(modo_practica, text= "TIEMPO_NIVEL1", command = practica9_tiempo1)
-	btn9_timepo1.place(x = 200, y = 100)
-	btn9_timepo2 = Button(modo_practica, text= "TIEMPO_NIVEL2", command = practica9_tiempo2)
-	btn9_timepo2.place(x = 400, y = 100)
-	btn9_timepo3 = Button(modo_practica, text= "TIEMPO_NIVEL3", command = practica9_tiempo3)
-	btn9_timepo3.place(x = 600, y = 100)
-	btn6_timepo1 = Button(modo_practica, text= "TIEMPO_NIVEL1", command = practica6_tiempo1)
-	btn6_timepo1.place(x = 200, y = 200)
-	btn6_timepo2 = Button(modo_practica, text= "TIEMPO_NIVEL2", command = practica6_tiempo2)
-	btn6_timepo2.place(x = 400, y = 200)
-	btn6_timepo3 = Button(modo_practica, text= "TIEMPO_NIVEL3", command = practica6_tiempo3)
-	btn6_timepo3.place(x = 600, y = 200)
-	btn3_timepo1 = Button(modo_practica, text= "TIEMPO_NIVEL1", command = practica3_tiempo1)
-	btn3_timepo1.place(x = 200, y = 300)
-	btn3_timepo2 = Button(modo_practica, text= "TIEMPO_NIVEL2", command = practica3_tiempo2)
-	btn3_timepo2.place(x = 400, y = 300)
-	btn3_timepo3 = Button(modo_practica, text= "TIEMPO_NIVEL3", command = practica3_tiempo3)
-	btn3_timepo3.place(x = 600, y = 300)
+	btn9_timepo1_S = Button(modo_practica, text= "TIEMPO_NIVEL1", command = practica9_tiempo1_S)
+	btn9_timepo1_S.place(x = 200, y = 100)
+	btn9_timepo1_D = Button(modo_practica, text= "TIEMPO_NIVEL1", command = practica9_tiempo1_D)
+	btn9_timepo1_D.place(x = 200, y = 130)
+	btn9_timepo2_S = Button(modo_practica, text= "TIEMPO_NIVEL2", command = practica9_tiempo2_S)
+	btn9_timepo2_S.place(x = 400, y = 100)
+	btn9_timepo2_D = Button(modo_practica, text= "TIEMPO_NIVEL2", command = practica9_tiempo2_D)
+	btn9_timepo2_D.place(x = 400, y = 130)
+	btn9_timepo3_S = Button(modo_practica, text= "TIEMPO_NIVEL3", command = practica9_tiempo3_S)
+	btn9_timepo3_S.place(x = 600, y = 100)
+	btn9_timepo3_D = Button(modo_practica, text= "TIEMPO_NIVEL3", command = practica9_tiempo3_D)
+	btn9_timepo3_D.place(x = 600, y = 130)
+	btn6_timepo1_S = Button(modo_practica, text= "TIEMPO_NIVEL1", command = practica6_tiempo1_S)
+	btn6_timepo1_S.place(x = 200, y = 200)
+	btn6_timepo1_D = Button(modo_practica, text= "TIEMPO_NIVEL1", command = practica6_tiempo1_D)
+	btn6_timepo1_D.place(x = 200, y = 230)
+	btn6_timepo2_S = Button(modo_practica, text= "TIEMPO_NIVEL2", command = practica6_tiempo2_S)
+	btn6_timepo2_S.place(x = 400, y = 200)
+	btn6_timepo2_D = Button(modo_practica, text= "TIEMPO_NIVEL2", command = practica6_tiempo2_D)
+	btn6_timepo2_D.place(x = 400, y = 230)
+	btn6_timepo3_S = Button(modo_practica, text= "TIEMPO_NIVEL3", command = practica6_tiempo3_S)
+	btn6_timepo3_S.place(x = 600, y = 200)
+	btn6_timepo3_D = Button(modo_practica, text= "TIEMPO_NIVEL3", command = practica6_tiempo3_D)
+	btn6_timepo3_D.place(x = 600, y = 230)
+	btn3_timepo1_S = Button(modo_practica, text= "TIEMPO_NIVEL1", command = practica3_tiempo1_S)
+	btn3_timepo1_S.place(x = 200, y = 300)
+	btn3_timepo1_D = Button(modo_practica, text= "TIEMPO_NIVEL1", command = practica3_tiempo1_D)
+	btn3_timepo1_D.place(x = 200, y = 330)
+	btn3_timepo2_S = Button(modo_practica, text= "TIEMPO_NIVEL2", command = practica3_tiempo2_S)
+	btn3_timepo2_S.place(x = 400, y = 300)
+	btn3_timepo2_D = Button(modo_practica, text= "TIEMPO_NIVEL2", command = practica3_tiempo2_D)
+	btn3_timepo2_D.place(x = 400, y = 330)
+	btn3_timepo3_S = Button(modo_practica, text= "TIEMPO_NIVEL3", command = practica3_tiempo3_S)
+	btn3_timepo3_S.place(x = 600, y = 300)
+	btn3_timepo3_D = Button(modo_practica, text= "TIEMPO_NIVEL3", command = practica3_tiempo3_D)
+	btn3_timepo3_D.place(x = 600, y = 330)
 
 	def back():
 		modo_practica.destroy()
