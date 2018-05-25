@@ -42,6 +42,7 @@ TIEMPO_NIVEL3 = 0.04
 TAMAÑO_BARRA_1 = 9
 TAMAÑO_BARRA_2 = 6
 TAMAÑO_BARRA_3 = 3
+TAMAÑO_BARRA_PRACTICA = 25
 
 # Clase Juego que controla las mecanicas de juego
 class Juego:
@@ -73,8 +74,9 @@ class Juego:
 						self.barra1 = Barra(1,2,TAMAÑO_BARRA_1) 
 						self.barra2 = Barra(38,2,TAMAÑO_BARRA_1)
 					else:
+						# Si se le define un tamaño es porque está en modo práctica
 						self.barra1 = Barra(1,2,self.tamaño) 
-						self.barra2 = Barra(38,2,self.tamaño)
+						self.barra2 = Barra(39,0,TAMAÑO_BARRA_PRACTICA)
 					if self.versus == "humano":
 						self.CPU = 0
 					elif self.versus == "cpu":
@@ -85,8 +87,8 @@ class Juego:
 						self.barra1 = Barra_doble(1,3,9,13,TAMAÑO_BARRA_1)
 						self.barra2 = Barra_doble(38,12,30,3,TAMAÑO_BARRA_1)
 					else:
-						self.barra1 = Barra(1,2,self.tamaño) 
-						self.barra2 = Barra(38,2,self.tamaño)
+						self.barra1 = Barra_doble(1,3,9,13,TAMAÑO_BARRA_1) 
+						self.barra2 = Barra(39,0,self.tamaño)
 					if self.versus == "humano":
 						# Si se escoje "humano" no se llama la función cpu()
 						self.CPU = 0
@@ -136,48 +138,58 @@ class Juego:
 		pygame.key.set_repeat(50, 50)
 		while not fuera_juego:
 			# Si el score de alguno de los jugadores es igual a 5
-			if self.bola.get_score1() == 5 or self.bola.get_score2() == 5:
-				# Se reinician los scores
-				self.bola.set_score1(0)
-				self.bola.set_score2(0)
-				# Se pasa de nivel
-				self.nivel += 1
-				# Se limpia la matriz para dibujar las barras del siguiente nivel
-				self.matriz = []
-				# Se vuelve a crear la matriz
-				self.crearMatriz()
-				# Se definen las condiciones de acuerdo con cada nivel
+			if self.versus != "practica":
+				if self.bola.get_score1() == 5 or self.bola.get_score2() == 5:
+					# Se reinician los scores
+					self.bola.set_score1(0)
+					self.bola.set_score2(0)
+					# Se pasa de nivel
+					self.nivel += 1
+					# Se limpia la matriz para dibujar las barras del siguiente nivel
+					self.matriz = []
+					# Se vuelve a crear la matriz
+					self.crearMatriz()
+					# Se definen las condiciones de acuerdo con cada nivel
+					if self.nivel == 1:
+						self.tiempo = TIEMPO_NIVEL1
+						if self.modo == "Single":
+							self.barra1 = Barra(1,2,TAMAÑO_BARRA_1) 
+							self.barra2 = Barra(38,2,TAMAÑO_BARRA_1)
+						else:
+							self.barra1 = Barra_doble(1,3,9,13,TAMAÑO_BARRA_1)
+							self.barra2 = Barra_doble(38,12,30,3,TAMAÑO_BARRA_1)
+					if self.nivel == 2:
+						self.tiempo = TIEMPO_NIVEL2
+						if self.modo == "Single":
+							self.barra1 = Barra(1,2,TAMAÑO_BARRA_2) 
+							self.barra2 = Barra(38,2,TAMAÑO_BARRA_2)
+						else:
+							self.barra1 = Barra_doble(1,3,9,13,TAMAÑO_BARRA_2)
+							self.barra2 = Barra_doble(38,12,30,3,TAMAÑO_BARRA_2)
+
+					if self.nivel == 3:
+						self.tiempo = TIEMPO_NIVEL3
+						if self.modo == "Single":
+							self.barra1 = Barra(1,2,TAMAÑO_BARRA_3) 
+							self.barra2 = Barra(38,2,TAMAÑO_BARRA_3)
+						else:
+							self.barra1 = Barra_doble(1,3,9,13,TAMAÑO_BARRA_3)
+							self.barra2 = Barra_doble(38,12,30,3,TAMAÑO_BARRA_3)
+
+					# Si pierde en el nivel 3, vuelve al nivel 1
+					if self.nivel == 4:
+						if self.bola.get_score1() == 5:
+							messagebox.showinfo("¡Felicidades!", "Has aprobado INTRO & TALLER.\nListo para ALGORITMOS Y ESTRUCTURAS DE DATOS I. :D")
+						self.nivel = 0
+			else:
 				if self.nivel == 1:
-					self.tiempo = TIEMPO_NIVEL1
+					self.tiempo = self.time
 					if self.modo == "Single":
-						self.barra1 = Barra(1,2,TAMAÑO_BARRA_1) 
-						self.barra2 = Barra(38,2,TAMAÑO_BARRA_1)
+						self.barra1 = Barra(1,2,self.tamaño) 
+						self.barra2 = Barra(39,0,TAMAÑO_BARRA_PRACTICA)
 					else:
-						self.barra1 = Barra_doble(1,3,9,13,TAMAÑO_BARRA_1)
-						self.barra2 = Barra_doble(38,12,30,3,TAMAÑO_BARRA_1)
-				if self.nivel == 2:
-					self.tiempo = TIEMPO_NIVEL2
-					if self.modo == "Single":
-						self.barra1 = Barra(1,2,TAMAÑO_BARRA_2) 
-						self.barra2 = Barra(38,2,TAMAÑO_BARRA_2)
-					else:
-						self.barra1 = Barra_doble(1,3,9,13,TAMAÑO_BARRA_2)
-						self.barra2 = Barra_doble(38,12,30,3,TAMAÑO_BARRA_2)
-
-				if self.nivel == 3:
-					self.tiempo = TIEMPO_NIVEL3
-					if self.modo == "Single":
-						self.barra1 = Barra(1,2,TAMAÑO_BARRA_3) 
-						self.barra2 = Barra(38,2,TAMAÑO_BARRA_3)
-					else:
-						self.barra1 = Barra_doble(1,3,9,13,TAMAÑO_BARRA_3)
-						self.barra2 = Barra_doble(38,12,30,3,TAMAÑO_BARRA_3)
-
-				# Si pierde en el nivel 3, vuelve al nivel 1
-				if self.nivel == 4:
-					if self.bola.get_score1() == 5:
-						messagebox.showinfo("¡Felicidades!", "Has aprobado INTRO & TALLER.\nListo para ALGORITMOS Y ESTRUCTURAS DE DATOS I. :D")
-					self.nivel = 0
+						self.barra1 = Barra_doble(1,3,9,13,self.tamaño)
+						self.barra2 = Barra(39,0,TAMAÑO_BARRA_PRACTICA)
 
 			# Eventos de las teclas
 			for event in pygame.event.get():
