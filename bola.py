@@ -143,6 +143,9 @@ class Bola:
 				else:
 					self.direccion = 0
 					self.derecha = False
+			if matriz[self.y - 6][self.x + 1] == 1 or matriz[self.y + 6][self.y + 1] == 1:
+				self.direccion = random.randrange(-1, 2)
+				self.derecha = False
 		# Si llega al principio y el siguiente cuadro es negro, rebote
 		elif self.x == 2 and matriz[self.y][self.x -1] == 0: 
 			pygame.mixer.Sound(os.path.join('sounds', 'fail.wav')).play()
