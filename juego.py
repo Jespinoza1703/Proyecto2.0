@@ -76,7 +76,7 @@ class Juego:
 					else:
 						# Si se le define un tamaño es porque está en modo práctica
 						self.barra1 = Barra(1,2,self.tamaño) 
-						self.barra2 = Barra(39,0,TAMAÑO_BARRA_PRACTICA)
+						self.barra2 = Barra(38,0,TAMAÑO_BARRA_PRACTICA)
 					if self.versus == "humano":
 						self.CPU = 0
 					elif self.versus == "cpu":
@@ -87,8 +87,8 @@ class Juego:
 						self.barra1 = Barra_doble(1,3,9,13,TAMAÑO_BARRA_1)
 						self.barra2 = Barra_doble(38,12,32,3,TAMAÑO_BARRA_1)
 					else:
-						self.barra1 = Barra_doble(1,3,9,13,TAMAÑO_BARRA_1) 
-						self.barra2 = Barra(39,0,self.tamaño)
+						self.barra1 = Barra_doble(1,3,9,13,self.tamaño) 
+						self.barra2 = Barra(38,0,TAMAÑO_BARRA_PRACTICA)
 					if self.versus == "humano":
 						# Si se escoje "humano" no se llama la función cpu()
 						self.CPU = 0
@@ -158,6 +158,7 @@ class Juego:
 						else:
 							self.barra1 = Barra_doble(1,3,9,13,TAMAÑO_BARRA_1)
 							self.barra2 = Barra_doble(38,12,32,3,TAMAÑO_BARRA_1)
+
 					if self.nivel == 2:
 						self.tiempo = TIEMPO_NIVEL2
 						if self.modo == "Single":
@@ -179,18 +180,30 @@ class Juego:
 					# Si pierde en el nivel 3, vuelve al nivel 1
 					if self.nivel == 4:
 						if self.bola.get_score1() == 5:
-							messagebox.showinfo("¡Felicidades!", "Has aprobado INTRO & TALLER.\nListo para ALGORITMOS Y ESTRUCTURAS DE DATOS I. :D")
+							font = pygame.font.Font(None, 48)
+							texto = font.render("¡Felicidades!", "Has aprobado INTRO & TALLER.\
+								\nListo para ALGORITMOS Y ESTRUCTURAS DE DATOS I. :D", True, (WHITE))
+							self.pantalla.blit(texto, (0, 0))
 						self.nivel = 0
 			else:
-				if self.nivel == 1:
-					self.tiempo = self.time
-					if self.tamaño != None:
-						if self.modo == "Single":
-							self.barra1 = Barra(1,2,self.tamaño) 
-							self.barra2 = Barra(39,0,TAMAÑO_BARRA_PRACTICA)
-						else:
-							self.barra1 = Barra_doble(1,3,7,13,self.tamaño)
-							self.barra2 = Barra(39,0,TAMAÑO_BARRA_PRACTICA)
+				if self.bola.get_score1() == 100:
+					# Se reinician los scores
+					self.bola.set_score1(0)
+					# Se pasa de nivel
+					self.nivel += 1
+					# Se limpia la matriz para dibujar las barras del siguiente nivel
+					self.matriz = []
+					# Se vuelve a crear la matriz
+					self.crearMatriz()
+					if self.nivel == 1:
+						self.tiempo = self.time
+						if self.tamaño != None:
+							if self.modo == "Single":
+								self.barra1 = Barra(1,2,self.tamaño) 
+								self.barra2 = Barra(38,0,TAMAÑO_BARRA_PRACTICA)
+							else:
+								self.barra1 = Barra_doble(1,3,7,13,self.tamaño)
+								self.barra2 = Barra(38,0,TAMAÑO_BARRA_PRACTICA)
 
 			# Eventos de las teclas
 			for event in pygame.event.get():
