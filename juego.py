@@ -7,6 +7,9 @@ from barra_doble import Barra_doble
 import time
 import random
 import os
+import serial
+
+#ser = serial.Serial('/dev/cu.usbmodem1411', 9600, timeout=0)
 
 BLACK = (0,0,0)
 WHITE = (255,255,255)
@@ -229,6 +232,9 @@ class Juego:
 
 			self.dibujar()
 
+			# Lee los estimulos del Arduino
+			#self.leerArduino()
+
 			# se llama la función cpu solo si la variable CPU es igual a 1
 			if self.CPU == 1:
 				self.cpu()
@@ -252,3 +258,17 @@ class Juego:
 		self.barra1.posicionar(self.matriz)
 		self.barra2.posicionar(self.matriz)
 		pygame.display.update()
+
+	def leerArduino(self):
+		try:
+			entrada = str(ser.readline())
+			datos = entrada[entrada.index("") + 1: entrada.index("\\")]
+			comando = datos[:datos.index("%")]
+			print(comando)
+			if comando == "'P1_UP":
+				self.barra1.mover(1, self.matriz)
+			elif comando == "'P1_DOWN":
+				self.barra1.mover(-1, self.matriz)
+		except:
+			print('NO INPUT')
+			time.sleep(0.0001)

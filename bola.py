@@ -75,19 +75,12 @@ class Bola:
 		elif self.x == 37 and matriz[self.y][self.x + 1] == 1: 
 			pygame.mixer.Sound(os.path.join('sounds', 'bounce.wav')).play()
 			# Si paleta es mayor a 9
-			if matriz[self.y - 6][self.x + 1] == 1 or matriz[self.y + 6][self.y + 1] == 1:
-				print("WWWERTYULFDSAZVBN;MNBFDSDUIKJHAZXCV;SO")
-				if matriz[self.y - 5][self.x + 1] == 0:
-					self.direccion = random.randrange(-1, 2)
-					self.derecha = False
-				elif matriz[self.y + 1][self.x + 1] == 0:
-					self.direccion = random.randrange(-1, 2)
-					self.derecha = False
-				else:
+			if matriz[self.y - 6][self.x + 1] == 1 or matriz[self.y + 6][self.x + 1] == 1:
+				if matriz[self.y - 6][self.x + 1] == 1 or matriz[self.y + 6][self.x + 1] == 1 :
 					self.direccion = random.randrange(-1, 2)
 					self.derecha = False
 			# Revisa si paleta es de 3
-			if matriz[self.y - 3][self.x + 1] == 0 and matriz[self.y + 3][self.x + 1] == 0: 
+			elif matriz[self.y - 3][self.x + 1] == 0 and matriz[self.y + 3][self.x + 1] == 0:
 				if matriz[self.y - 1][self.x + 1] == 0:
 					self.direccion = 1
 					self.derecha = False
@@ -98,7 +91,7 @@ class Bola:
 					self.direccion = 0
 					self.derecha = False
 			# Si paleta es 6
-			if matriz[self.y - 3][self.x + 1] == 1 or matriz[self.y + 3][self.x + 1] == 1: 
+			elif matriz[self.y - 3][self.x + 1] == 1 or matriz[self.y + 3][self.x + 1] == 1: 
 				if matriz[self.y - 2][self.x + 1] == 0:
 					self.direccion = 1
 					self.derecha = False
@@ -109,7 +102,7 @@ class Bola:
 					self.direccion = 0
 					self.derecha = False
 			# Si paleta es 9
-			if matriz[self.y - 5][self.x + 1] == 1 or matriz[self.y + 5][self.x + 1] == 1: 
+			elif matriz[self.y - 5][self.x + 1] == 1 or matriz[self.y + 5][self.x + 1] == 1: 
 				if matriz[self.y - 3][self.x + 1] == 0:
 					self.direccion = 1
 					self.derecha = False
