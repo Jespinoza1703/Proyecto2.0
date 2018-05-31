@@ -84,10 +84,10 @@ class Juego:
 				else:
 					# La primer barra es la de la izquiera, la otra la de la derecha
 					if self.tamaño == None:
-						self.barra1 = Barra_doble(1,3,9,13,TAMAÑO_BARRA_1)
-						self.barra2 = Barra_doble(38,12,32,3,TAMAÑO_BARRA_1)
+						self.barra1 = Barra_doble(1,2,9,13,TAMAÑO_BARRA_1)
+						self.barra2 = Barra_doble(38,12,30,3,TAMAÑO_BARRA_1)
 					else:
-						self.barra1 = Barra_doble(1,3,9,13,self.tamaño) 
+						self.barra1 = Barra_doble(1,2,9,13,self.tamaño) 
 						self.barra2 = Barra(38,0,TAMAÑO_BARRA_PRACTICA)
 					if self.versus == "humano":
 						# Si se escoje "humano" no se llama la función cpu()
@@ -138,13 +138,18 @@ class Juego:
 		pygame.key.set_repeat(50, 50)
 		while not fuera_juego:
 			# Si el score de alguno de los jugadores es igual a 5
+			clock = pygame.time
 			if self.versus != "practica":
-				if self.bola.get_score1() == 5 or self.bola.get_score2() == 5:
+				if self.bola.get_score1() == 2 or self.bola.get_score2() == 2:
 					# Se reinician los scores
 					self.bola.set_score1(0)
 					self.bola.set_score2(0)
 					# Se pasa de nivel
-					self.nivel += 1
+					self.nivel += 1	
+					# Si pierde en el nivel 3, vuelve al nivel 1
+					if self.nivel == 4:
+						print("TIME: " + str(clock.get_ticks()/1000))
+						self.nivel = 1
 					# Se limpia la matriz para dibujar las barras del siguiente nivel
 					self.matriz = []
 					# Se vuelve a crear la matriz
@@ -156,35 +161,31 @@ class Juego:
 							self.barra1 = Barra(1,2,TAMAÑO_BARRA_1) 
 							self.barra2 = Barra(38,2,TAMAÑO_BARRA_1)
 						else:
-							self.barra1 = Barra_doble(1,3,9,13,TAMAÑO_BARRA_1)
+							self.barra1 = Barra_doble(1,2,9,13,TAMAÑO_BARRA_1)
 							self.barra2 = Barra_doble(38,12,32,3,TAMAÑO_BARRA_1)
 
-					if self.nivel == 2:
+					elif self.nivel == 2:
 						self.tiempo = TIEMPO_NIVEL2
 						if self.modo == "Single":
 							self.barra1 = Barra(1,2,TAMAÑO_BARRA_2) 
 							self.barra2 = Barra(38,2,TAMAÑO_BARRA_2)
 						else:
-							self.barra1 = Barra_doble(1,3,9,13,TAMAÑO_BARRA_2)
-							self.barra2 = Barra_doble(38,12,32,3,TAMAÑO_BARRA_2)
+							self.barra1 = Barra_doble(1,2,9,13,TAMAÑO_BARRA_2)
+							self.barra2 = Barra_doble(38,12,30,3,TAMAÑO_BARRA_2)
 
-					if self.nivel == 3:
+					elif self.nivel == 3:
 						self.tiempo = TIEMPO_NIVEL3
 						if self.modo == "Single":
 							self.barra1 = Barra(1,2,TAMAÑO_BARRA_3) 
 							self.barra2 = Barra(38,2,TAMAÑO_BARRA_3)
 						else:
-							self.barra1 = Barra_doble(1,3,9,13,TAMAÑO_BARRA_3)
-							self.barra2 = Barra_doble(38,12,32,3,TAMAÑO_BARRA_3)
+							self.barra1 = Barra_doble(1,2,9,13,TAMAÑO_BARRA_3)
+							self.barra2 = Barra_doble(38,12,30,3,TAMAÑO_BARRA_3)
 
-					# Si pierde en el nivel 3, vuelve al nivel 1
-					if self.nivel == 4:
-						if self.bola.get_score1() == 5:
-							font = pygame.font.Font(None, 48)
-							texto = font.render("¡Felicidades!", "Has aprobado INTRO & TALLER.\
-								\nListo para ALGORITMOS Y ESTRUCTURAS DE DATOS I. :D", True, (WHITE))
-							self.pantalla.blit(texto, (0, 0))
-						self.nivel = 0
+
+
+
+					
 			else:
 				if self.bola.get_score1() == 100:
 					# Se reinician los scores
@@ -202,7 +203,7 @@ class Juego:
 								self.barra1 = Barra(1,2,self.tamaño) 
 								self.barra2 = Barra(38,0,TAMAÑO_BARRA_PRACTICA)
 							else:
-								self.barra1 = Barra_doble(1,3,7,13,self.tamaño)
+								self.barra1 = Barra_doble(1,3,9,13,self.tamaño)
 								self.barra2 = Barra(38,0,TAMAÑO_BARRA_PRACTICA)
 
 			# Eventos de las teclas
@@ -232,7 +233,7 @@ class Juego:
 			# se llama la función cpu solo si la variable CPU es igual a 1
 			if self.CPU == 1:
 				self.cpu()
-
+	
 			
 	def dibujar(self):
 		# Se defne un texto para poner en la pantalla
