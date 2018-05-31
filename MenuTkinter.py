@@ -10,7 +10,10 @@ from tkinter import *
 import os
 import pygame
 
+ventana = None
+
 def inicio():
+	global ventana
 	TIEMPO_NIVEL1 = 0.1
 	TIEMPO_NIVEL2 = 0.07
 	TIEMPO_NIVEL3 = 0.04
@@ -46,7 +49,7 @@ def inicio():
 	# Funcion para cambiar idioma de textos
 	def cambiarIdioma():
 	    global IDIOMA
-	    IDIOMA = 1 - IDIOMA
+	    IDIOMA -= IDIOMA
 	    oneplayer_label.config(text=traduccion[0][IDIOMA])
 	    oneplayertworacket_label.config(text=traduccion[2][IDIOMA])
 	    twoplayer_label.config(text=traduccion[2][IDIOMA])
@@ -95,8 +98,9 @@ def inicio():
 
 	# Opcion de jugar con una paleta contra el CPU
 	def Single_cpu():
+		global ventana
 		ventana.withdraw()
-		juego = Juego("Single", 1, "cpu")
+		juego = Juego("Single", 1, "cpu", ventana)
 		juego.jugar()
 
 	# Opcion de jugar con dos paletas contra otro humano
