@@ -1,5 +1,5 @@
 import pygame
-import tkinter
+from tkinter import *
 from tkinter import messagebox
 from barra import Barra
 from bola import Bola
@@ -11,6 +11,54 @@ import os
 BLACK = (0,0,0)
 WHITE = (255,255,255)
 L = 20
+
+
+
+# Constantes
+ANCHO = 800
+LARGO = 500
+
+TIEMPO_NIVEL1 = 0.1
+TIEMPO_NIVEL2 = 0.07
+TIEMPO_NIVEL3 = 0.04
+
+TAMAÑO_BARRA_1 = 9
+TAMAÑO_BARRA_2 = 6
+TAMAÑO_BARRA_3 = 3
+TAMAÑO_BARRA_PRACTICA = 25
+
+def archivarTiempos():	
+	def abrirArchivo(archivo, modo): #abre el archivo
+		file = open(archivo, modo)
+		return file
+
+	def separarTiempos(i):
+		if i == len(listaTiempos):
+			return
+		listaTiempos[i] = listaTiempos[i].replace("\n", "").split(";")
+		separarTiempos(i + 1)
+	archivo = abrirArchivo("Tiempos.txt", "r")
+	listaTiempos = archivo.readlines()
+	separarTiempos(0)
+	archivo.close()
+	def crearVentana(): #Abre una nueva ventana donde hay dos botones: Administrar Apps y Administrar Vendedores
+		vent = Tk()
+		vent.title("Mejores Tiempos de Juego")
+		vent.minsize (500, 500)
+		canvas1 = Canvas (vent, width = 800, height = 600)
+		canvas1.place (x = -1, y = -1)
+
+		def volver():
+			vent.destroy()
+		boton = Button (vent, text = "volver", font = ("arial", 12), width = 6, command = volver)
+		boton.place (x = 120, y = 10)
+		vent.mainloop()
+	crearVentana()
+
+	
+
+
+	
 
 # Clase Juego:
 # Atributos:
@@ -30,23 +78,8 @@ L = 20
 # cpu()
 # jugar()
 # dibujar()
-
-# Constantes
-ANCHO = 800
-LARGO = 500
-
-TIEMPO_NIVEL1 = 0.1
-TIEMPO_NIVEL2 = 0.07
-TIEMPO_NIVEL3 = 0.04
-
-TAMAÑO_BARRA_1 = 9
-TAMAÑO_BARRA_2 = 6
-TAMAÑO_BARRA_3 = 3
-TAMAÑO_BARRA_PRACTICA = 25
-
-# Clase Juego que controla las mecanicas de juego
 class Juego:
-	def __init__(self, modo, nivel, versus, tamaño=None, time=TIEMPO_NIVEL1):
+	def __init__(self, modo, nivel, versus, ventana, tamaño=None, time=TIEMPO_NIVEL1):
 		pygame.init()
 		self.pantalla = pygame.display.set_mode((ANCHO,LARGO))
 		pygame.display.set_caption("Pong")
@@ -62,6 +95,7 @@ class Juego:
 		self.CPU = 0
 		self.tamaño = tamaño
 		self.time = time
+		self.ventana = ventana
 
 		# Se define el tiempo, tamaño de barra, modo y versus de cada nivel
 		if self.nivel == 1:
@@ -133,6 +167,7 @@ class Juego:
 				self.barra2.mover(1, self.matriz)
 
 	def jugar(self):
+		global ventana
 		fuera_juego = False
 		# Genera múltiples eventos pygame.KEYDOWN
 		pygame.key.set_repeat(50, 50)
@@ -140,7 +175,7 @@ class Juego:
 			# Si el score de alguno de los jugadores es igual a 5
 			clock = pygame.time
 			if self.versus != "practica":
-				if self.bola.get_score1() == 2 or self.bola.get_score2() == 2:
+				if self.bola.get_score1() == 1 or self.bola.get_score2() == 1:
 					# Se reinician los scores
 					self.bola.set_score1(0)
 					self.bola.set_score2(0)
@@ -149,7 +184,9 @@ class Juego:
 					# Si pierde en el nivel 3, vuelve al nivel 1
 					if self.nivel == 4:
 						print("TIME: " + str(clock.get_ticks()/1000))
-						self.nivel = 1
+						archivarTiempos()
+						pygame.quit()
+						quit()
 					# Se limpia la matriz para dibujar las barras del siguiente nivel
 					self.matriz = []
 					# Se vuelve a crear la matriz
@@ -223,6 +260,9 @@ class Juego:
 					elif event.key == pygame.K_ESCAPE:
 						pygame.quit()
 						quit()
+					elif event.key == pygame.K_SPACE:
+						pygame.quit()
+						self.ventana.deiconify()
 
 			# Aquí se actualiza constántemente la matriz para que
 			# ocurra el movimiento de forma continua
