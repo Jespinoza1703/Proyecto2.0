@@ -11,6 +11,7 @@ import os
 import pygame
 
 ventana = None
+musicOn = 0
 
 def inicio():
 	global ventana
@@ -68,7 +69,9 @@ def inicio():
 	def playMusic():
 		pygame.mixer.Sound(os.path.join("sounds", "music.ogg")).play(loops = -1)
 
-	playMusic()
+	if musicOn == 1:
+			playMusic()
+
 
 	# Carga de imagenes
 	racket1cpuicon = loadPicture("1racketcpu.gif")
