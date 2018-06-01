@@ -44,15 +44,16 @@ def archivarTiempos():
 	def crearVentana(): #Abre una nueva ventana donde hay dos botones: Administrar Apps y Administrar Vendedores
 		vent = Tk()
 		vent.title("Mejores Tiempos de Juego")
-		vent.minsize (500, 500)
-		canvas1 = Canvas (vent, width = 800, height = 600)
+		vent.minsize (800, 500)
+		canvas1 = Canvas (vent, width = 800, height = 500)
 		canvas1.place (x = -1, y = -1)
 
 		def volver():
 			vent.destroy()
-		boton = Button (vent, text = "volver", font = ("arial", 12), width = 6, command = volver)
+		boton = Button (vent, font = ("arial", 12), width = 6, command = volver)
 		boton.place (x = 120, y = 10)
 		vent.mainloop()
+	pygame.quit()
 	crearVentana()
 
 	
@@ -184,9 +185,9 @@ class Juego:
 					# Si pierde en el nivel 3, vuelve al nivel 1
 					if self.nivel == 4:
 						print("TIME: " + str(clock.get_ticks()/1000))
+						self.ventana.deiconify()
 						archivarTiempos()
 						pygame.quit()
-						quit()
 					# Se limpia la matriz para dibujar las barras del siguiente nivel
 					self.matriz = []
 					# Se vuelve a crear la matriz
@@ -218,8 +219,6 @@ class Juego:
 						else:
 							self.barra1 = Barra_doble(1,2,9,13,TAMAÑO_BARRA_3)
 							self.barra2 = Barra_doble(38,12,30,3,TAMAÑO_BARRA_3)
-
-
 
 
 					
@@ -261,8 +260,8 @@ class Juego:
 						pygame.quit()
 						quit()
 					elif event.key == pygame.K_SPACE:
-						pygame.quit()
 						self.ventana.deiconify()
+						pygame.quit()
 
 			# Aquí se actualiza constántemente la matriz para que
 			# ocurra el movimiento de forma continua
