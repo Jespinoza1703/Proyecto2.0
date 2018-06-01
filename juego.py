@@ -27,34 +27,6 @@ TAMAÑO_BARRA_2 = 6
 TAMAÑO_BARRA_3 = 3
 TAMAÑO_BARRA_PRACTICA = 25
 
-def archivarTiempos():	
-	def abrirArchivo(archivo, modo): #abre el archivo
-		file = open(archivo, modo)
-		return file
-
-	def separarTiempos(i):
-		if i == len(listaTiempos):
-			return
-		listaTiempos[i] = listaTiempos[i].replace("\n", "").split(";")
-		separarTiempos(i + 1)
-	archivo = abrirArchivo("Tiempos.txt", "r")
-	listaTiempos = archivo.readlines()
-	separarTiempos(0)
-	archivo.close()
-	def crearVentana(): #Abre una nueva ventana donde hay dos botones: Administrar Apps y Administrar Vendedores
-		vent = Tk()
-		vent.title("Mejores Tiempos de Juego")
-		vent.minsize (800, 500)
-		canvas1 = Canvas (vent, width = 800, height = 500)
-		canvas1.place (x = -1, y = -1)
-
-		def volver():
-			vent.destroy()
-		boton = Button (vent, font = ("arial", 12), width = 6, command = volver)
-		boton.place (x = 120, y = 10)
-		vent.mainloop()
-	pygame.quit()
-	crearVentana()
 
 	
 
@@ -79,9 +51,9 @@ def archivarTiempos():
 # cpu()
 # jugar()
 # dibujar()
+pygame.init()
 class Juego:
 	def __init__(self, modo, nivel, versus, ventana, tamaño=None, time=TIEMPO_NIVEL1):
-		pygame.init()
 		self.pantalla = pygame.display.set_mode((ANCHO,LARGO))
 		pygame.display.set_caption("Pong")
 		self.FILAS = 30
@@ -185,8 +157,7 @@ class Juego:
 					# Si pierde en el nivel 3, vuelve al nivel 1
 					if self.nivel == 4:
 						print("TIME: " + str(clock.get_ticks()/1000))
-						self.ventana.deiconify()
-						archivarTiempos()
+						self.archivarTiempos()
 						pygame.quit()
 					# Se limpia la matriz para dibujar las barras del siguiente nivel
 					self.matriz = []
@@ -292,3 +263,33 @@ class Juego:
 		self.barra1.posicionar(self.matriz)
 		self.barra2.posicionar(self.matriz)
 		pygame.display.update()
+
+	def archivarTiempos(self):	
+		def abrirArchivo(archivo, modo): #abre el archivo
+			file = open(archivo, modo)
+			return file
+
+		def separarTiempos(i):
+			if i == len(listaTiempos):
+				return
+			listaTiempos[i] = listaTiempos[i].replace("\n", "").split(";")
+			separarTiempos(i + 1)
+		archivo = abrirArchivo("Tiempos.txt", "r")
+		listaTiempos = archivo.readlines()
+		separarTiempos(0)
+		archivo.close()
+		def crearVentana(): #Abre una nueva ventana donde hay dos botones: Administrar Apps y Administrar Vendedores
+			vent = Tk()
+			vent.title("Mejores Tiempos de Juego")
+			vent.minsize (800, 500)
+			canvas1 = Canvas (vent, width = 800, height = 500)
+			canvas1.place (x = -1, y = -1)
+
+			def volver():
+				vent.destroy()
+				self.ventana.deiconify()
+			boton = Button (vent, font = ("arial", 12), width = 6, command = volver)
+			boton.place (x = 120, y = 10)
+			vent.mainloop()
+		pygame.quit()
+		crearVentana()
