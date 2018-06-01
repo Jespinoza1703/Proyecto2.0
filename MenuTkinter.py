@@ -70,7 +70,7 @@ def inicio():
 		pygame.mixer.Sound(os.path.join("sounds", "music.ogg")).play(loops = -1)
 
 	if musicOn == 1:
-			playMusic()
+		playMusic()
 
 
 	# Carga de imagenes
@@ -96,12 +96,11 @@ def inicio():
 	#Opcion de jugar con una paleta contra otro humano
 	def Single_humano():
 		ventana.withdraw()
-		juego = Juego("Single", 1, "humano")
+		juego = Juego("Single", 1, "humano", ventana)
 		juego.jugar()
 
 	# Opcion de jugar con una paleta contra el CPU
 	def Single_cpu():
-		global ventana
 		ventana.withdraw()
 		juego = Juego("Single", 1, "cpu", ventana)
 		juego.jugar()
@@ -109,13 +108,13 @@ def inicio():
 	# Opcion de jugar con dos paletas contra otro humano
 	def Double_humano():
 		ventana.withdraw()
-		juego = Juego("Double", 1, "humano")
+		juego = Juego("Double", 1, "humano", ventana)
 		juego.jugar()
 
 	# Opcion de jugar con dos paletas contra el CPU
 	def Double_cpu():
 		ventana.withdraw()
-		juego = Juego("Double", 1, "cpu")
+		juego = Juego("Double", 1, "cpu", ventana)
 		juego.jugar()
 
 	# Ventana de informacion de programadores
