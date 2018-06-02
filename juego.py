@@ -148,7 +148,7 @@ class Juego:
 			# Si el score de alguno de los jugadores es igual a 5
 			clock = pygame.time
 			if self.versus != "practica":
-				if self.bola.get_score1() == 1 or self.bola.get_score2() == 1:
+				if self.bola.get_score1() == 5 or self.bola.get_score2() == 5:
 					# Se reinician los scores
 					self.bola.set_score1(0)
 					self.bola.set_score2(0)
@@ -230,6 +230,8 @@ class Juego:
 					elif event.key == pygame.K_ESCAPE:
 						pygame.quit()
 						quit()
+					elif event.key == pygame.K_p:
+						self.pausa()
 					elif event.key == pygame.K_SPACE:
 						self.ventana.deiconify()
 						pygame.quit()
@@ -293,3 +295,22 @@ class Juego:
 			vent.mainloop()
 		pygame.quit()
 		crearVentana()
+
+	def pausa(self):
+		pausado = True
+		
+		while pausado:
+			pantalla = pygame.display.set_mode((ANCHO,LARGO))
+			font = pygame.font.Font(None, 25)
+			for x in range (self.FILAS):
+				score_text = font.render(str(self.matriz[x]), True,(WHITE))
+				# Se coloca el texto en la pantalla
+				pantalla.blit(score_text, (20, 20*x))
+			pygame.display.update()
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT: #is le da X, cierra todo
+					pygame.quit()
+					quit()
+				if event.type == pygame.KEYDOWN: #al presionar una tecla
+					if event.key == pygame.K_p:
+						pausado = False
