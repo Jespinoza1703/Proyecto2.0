@@ -52,6 +52,9 @@ TAMAÑO_BARRA_PRACTICA = 25
 # jugar()
 # dibujar()
 pygame.init()
+
+total = None
+
 class Juego:
 	def __init__(self, modo, nivel, versus, ventana, tamaño=None, time=TIEMPO_NIVEL1):
 		self.pantalla = pygame.display.set_mode((ANCHO,LARGO))
@@ -140,23 +143,26 @@ class Juego:
 				self.barra2.mover(1, self.matriz)
 
 	def jugar(self):
-		global ventana
+		global ventana, total, total1, total2, total3
 		fuera_juego = False
 		# Genera múltiples eventos pygame.KEYDOWN
 		pygame.key.set_repeat(50, 50)
 		while not fuera_juego:
 			# Si el score de alguno de los jugadores es igual a 5
-			clock = pygame.time
 			if self.versus != "practica":
 				if self.bola.get_score1() == 1 or self.bola.get_score2() == 1:
 					# Se reinician los scores
 					self.bola.set_score1(0)
 					self.bola.set_score2(0)
 					# Se pasa de nivel
-					self.nivel += 1	
+					self.nivel += 1 
 					# Si pierde en el nivel 3, vuelve al nivel 1
 					if self.nivel == 4:
-						print("TIME: " + str(clock.get_ticks()/1000))
+						total1 = total
+						total2 = total
+						total3 = total
+						total = str((time.time()-inicial)*10)
+						print(total)
 						self.archivarTiempos()
 						pygame.quit()
 					# Se limpia la matriz para dibujar las barras del siguiente nivel
@@ -164,6 +170,7 @@ class Juego:
 					# Se vuelve a crear la matriz
 					self.crearMatriz()
 					# Se definen las condiciones de acuerdo con cada nivel
+					inicial = time.time()
 					if self.nivel == 1:
 						self.tiempo = TIEMPO_NIVEL1
 						if self.modo == "Single":
@@ -214,6 +221,7 @@ class Juego:
 								self.barra2 = Barra(38,0,TAMAÑO_BARRA_PRACTICA)
 
 			# Eventos de las teclas
+			pygame.init()
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT: #is le da X, cierra todo
 					pygame.quit()
@@ -231,8 +239,8 @@ class Juego:
 						pygame.quit()
 						quit()
 					elif event.key == pygame.K_SPACE:
-						self.ventana.deiconify()
 						pygame.quit()
+						quit()
 
 			# Aquí se actualiza constántemente la matriz para que
 			# ocurra el movimiento de forma continua
@@ -264,7 +272,14 @@ class Juego:
 		self.barra2.posicionar(self.matriz)
 		pygame.display.update()
 
-	def archivarTiempos(self):	
+	def archivarTiempos(self):  
+
+		def unirLista(matriz):  # Invierte las funciones de separar para la modificación del archivo txt
+			if matriz == []:
+				return []
+			else:
+				return [";".join(matriz[0])] + unirLista(matriz[1:])
+
 		def abrirArchivo(archivo, modo): #abre el archivo
 			file = open(archivo, modo)
 			return file
@@ -277,18 +292,66 @@ class Juego:
 		archivo = abrirArchivo("Tiempos.txt", "r")
 		listaTiempos = archivo.readlines()
 		separarTiempos(0)
+		#print(listaTiempos)
 		archivo.close()
+
+		def scores():
+			global total1, total2, total3
+			hacer = True
+			for i in listaTiempos:
+				print(i[1])
+				if i[1] < str(total1) and hacer:
+					total1 = i[1]
+					print(i[1])
+					for j in listaTiempos:
+						if j[1] < str(total2) and str(total1) < str(total2) and hacer:
+							total2 = j[1]
+							print(i[1])
+							for i in listaTiempos:
+								if i[1] < str(total3) and str(total2) < str(total3) and hacer:
+									total3 = i[1]
+									print(i[1])
+									hacer = False
+
+
+
 		def crearVentana(): #Abre una nueva ventana donde hay dos botones: Administrar Apps y Administrar Vendedores
+			global total1, total2, total3
+			scores()
 			vent = Tk()
 			vent.title("Mejores Tiempos de Juego")
 			vent.minsize (800, 500)
-			canvas1 = Canvas (vent, width = 800, height = 500)
-			canvas1.place (x = -1, y = -1)
+			vent.config(bg="black")
 
-			def volver():
-				vent.destroy()
-				self.ventana.deiconify()
-			boton = Button (vent, font = ("arial", 12), width = 6, command = volver)
+
+			labelNombre = Label(vent, text = "¡Tiempo récord! \n Ingrese sus iniciales:", font = ("arial bold", 30), bg = "black", fg = "yellow")
+			labelNombre.place (x = 200, y = 250)
+			entradaNombre = Entry (vent, font = ("arial", 16), width = 25, bg = "grey")
+			entradaNombre.place (x = 257, y = 380)
+
+			tiempo1 = Label(vent, text = "Tiempo1: " + total1, font = ("arial bold", 16), bg = "black", fg = "white")
+			tiempo1.place (x = 80, y = 100)
+			tiempo2 = Label(vent, text = "Tiempo2: " + total2, font = ("arial bold", 16), bg = "black", fg = "white")
+			tiempo2.place (x = 80, y = 150)
+			tiempo3 = Label(vent, text = "Tiempo3: " + total3, font = ("arial bold", 16), bg = "black", fg = "white")
+			tiempo3.place (x = 80, y = 200)
+
+			def listo():
+				global total, total1, total2, total3
+				for i in listaTiempos:
+					total = i[1]
+				if entradaNombre.get() != "":
+					registrar = open("Tiempos.txt", "a") #abre un archivo
+					registrar.write(entradaNombre.get() + ";" + total +  "\n") #escribe en el archivo
+					registrar.close()
+					vent.destroy()
+					self.ventana.deiconify()
+				else:
+					messagebox.showerror("Error en los datos", "Ingrese sus iniciales")
+
+
+				
+			boton = Button (vent, text = "Listo!",  font = ("arial", 12), width = 6, command = listo)
 			boton.place (x = 120, y = 10)
 			vent.mainloop()
 		pygame.quit()
