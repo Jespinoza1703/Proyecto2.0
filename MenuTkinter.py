@@ -12,6 +12,9 @@ import pygame
 
 ventana = None
 musicOn = 0
+IDIOMA = 0
+ESP = 0
+ENG = 1
 
 def inicio():
 	global ventana
@@ -28,10 +31,7 @@ def inicio():
 	               ["Acerca de", "About"],#5
 	                ]
 	 
-	# Variables globales
-	IDIOMA = 0
-	ESP = 0
-	ENG = 1
+	# Variables globales\
 	music = True
 
 	# Hace la ventana
@@ -52,7 +52,7 @@ def inicio():
 	    global IDIOMA
 	    IDIOMA -= IDIOMA
 	    oneplayer_label.config(text=traduccion[0][IDIOMA])
-	    oneplayertworacket_label.config(text=traduccion[2][IDIOMA])
+	    oneplayertworacket_label.config(text=traduccion[1][IDIOMA])
 	    twoplayer_label.config(text=traduccion[2][IDIOMA])
 	    twoplayertworacket_label.config(text=traduccion[3][IDIOMA])
 	    help_label.config(text=traduccion[4][IDIOMA])
