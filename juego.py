@@ -8,8 +8,11 @@ import random
 import os
 import serial
 
+<<<<<<< HEAD
 #Puerto serial de Arduino
 #ser = serial.Serial('/dev/cu.itead-DevB', 9600, timeout=0)
+=======
+>>>>>>> master
 #ser = serial.Serial('/dev/cu.usbmodem1411', 9600, timeout=0)
 
 BLACK = (0,0,0)
@@ -257,7 +260,11 @@ class Juego:
 			self.dibujar()
 
 			# Lee los estimulos del Arduino
+<<<<<<< HEAD
 			self.leerArduino()
+=======
+			#self.leerArduino()
+>>>>>>> master
 
 			# se llama la función cpu solo si la variable CPU es igual a 1
 			if self.CPU == 1:
@@ -283,6 +290,7 @@ class Juego:
 		self.barra2.posicionar(self.matriz)
 		pygame.display.update()
 
+<<<<<<< HEAD
 	def playMusic(self):
 		if self.musicSpeed == 1:
 			back_music = pygame.mixer.music.load(os.path.join("sounds", "music.ogg"))
@@ -301,6 +309,8 @@ class Juego:
 		self.background_color = (random.randrange(0, 256), random.randrange(0, 256), random.randrange(0, 256))
 
 	# Lee las instrucciones del Arduino con Pyserial
+=======
+>>>>>>> master
 	def leerArduino(self):
 		try:
 			entrada = str(ser.readline())
@@ -311,6 +321,7 @@ class Juego:
 				self.barra1.mover(1, self.matriz)
 			elif comando == "'P1_DOWN":
 				self.barra1.mover(-1, self.matriz)
+<<<<<<< HEAD
 			elif comando == "'MUTE":
 				if self.musicOn == 1:
 					self.musicOn = 0
@@ -408,3 +419,8 @@ class Juego:
 			vent.mainloop()
 		pygame.quit()
 		crearVentana()
+=======
+		except:
+			print('NO INPUT')
+			time.sleep(0.0001)
+>>>>>>> master

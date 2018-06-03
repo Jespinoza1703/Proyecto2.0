@@ -195,6 +195,7 @@ def inicio():
 			helpventana.destroy()
 			ventana.deiconify()
 
+<<<<<<< HEAD
 		backbutton = Button(helpcanvas, image = backicon, command = back)
 		backbutton.place(x = 20, y = 20)
 
