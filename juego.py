@@ -78,12 +78,12 @@ class Juego:
 				self.tiempo = time
 				if self.modo == "Single":
 					if self.tamaño == None:
-						self.barra1 = Barra(1,2,TAMAÑO_BARRA_1) 
-						self.barra2 = Barra(38,2,TAMAÑO_BARRA_1)
+						self.barra1 = Barra(1,2,TAMAÑO_BARRA_1,1) 
+						self.barra2 = Barra(38,2,TAMAÑO_BARRA_1,1)
 					else:
 						# Si se le define un tamaño es porque está en modo práctica
-						self.barra1 = Barra(1,2,self.tamaño) 
-						self.barra2 = Barra(38,0,TAMAÑO_BARRA_PRACTICA)
+						self.barra1 = Barra(1,2,self.tamaño,1) 
+						self.barra2 = Barra(38,0,TAMAÑO_BARRA_PRACTICA,1)
 					if self.versus == "humano":
 						self.CPU = 0
 					elif self.versus == "cpu":
@@ -95,7 +95,7 @@ class Juego:
 						self.barra2 = Barra_doble(38,12,30,3,TAMAÑO_BARRA_1)
 					else:
 						self.barra1 = Barra_doble(1,2,9,13,self.tamaño) 
-						self.barra2 = Barra(38,0,TAMAÑO_BARRA_PRACTICA)
+						self.barra2 = Barra(38,0,TAMAÑO_BARRA_PRACTICA,1)
 					if self.versus == "humano":
 						# Si se escoje "humano" no se llama la función cpu()
 						self.CPU = 0
@@ -167,8 +167,8 @@ class Juego:
 					if self.nivel == 1:
 						self.tiempo = TIEMPO_NIVEL1
 						if self.modo == "Single":
-							self.barra1 = Barra(1,2,TAMAÑO_BARRA_1) 
-							self.barra2 = Barra(38,2,TAMAÑO_BARRA_1)
+							self.barra1 = Barra(1,2,TAMAÑO_BARRA_1,1) 
+							self.barra2 = Barra(38,2,TAMAÑO_BARRA_1,1)
 						else:
 							self.barra1 = Barra_doble(1,2,9,13,TAMAÑO_BARRA_1)
 							self.barra2 = Barra_doble(38,12,32,3,TAMAÑO_BARRA_1)
@@ -176,8 +176,8 @@ class Juego:
 					elif self.nivel == 2:
 						self.tiempo = TIEMPO_NIVEL2
 						if self.modo == "Single":
-							self.barra1 = Barra(1,2,TAMAÑO_BARRA_2) 
-							self.barra2 = Barra(38,2,TAMAÑO_BARRA_2)
+							self.barra1 = Barra(1,2,TAMAÑO_BARRA_2,1) 
+							self.barra2 = Barra(38,2,TAMAÑO_BARRA_2,1)
 						else:
 							self.barra1 = Barra_doble(1,2,9,13,TAMAÑO_BARRA_2)
 							self.barra2 = Barra_doble(38,12,30,3,TAMAÑO_BARRA_2)
@@ -185,8 +185,8 @@ class Juego:
 					elif self.nivel == 3:
 						self.tiempo = TIEMPO_NIVEL3
 						if self.modo == "Single":
-							self.barra1 = Barra(1,2,TAMAÑO_BARRA_3) 
-							self.barra2 = Barra(38,2,TAMAÑO_BARRA_3)
+							self.barra1 = Barra(1,2,TAMAÑO_BARRA_3,1) 
+							self.barra2 = Barra(38,2,TAMAÑO_BARRA_3,1)
 						else:
 							self.barra1 = Barra_doble(1,2,9,13,TAMAÑO_BARRA_3)
 							self.barra2 = Barra_doble(38,12,30,3,TAMAÑO_BARRA_3)
@@ -207,11 +207,11 @@ class Juego:
 						self.tiempo = self.time
 						if self.tamaño != None:
 							if self.modo == "Single":
-								self.barra1 = Barra(1,2,self.tamaño) 
-								self.barra2 = Barra(38,0,TAMAÑO_BARRA_PRACTICA)
+								self.barra1 = Barra(1,2,self.tamaño,1) 
+								self.barra2 = Barra(38,0,TAMAÑO_BARRA_PRACTICA,1)
 							else:
 								self.barra1 = Barra_doble(1,3,9,13,self.tamaño)
-								self.barra2 = Barra(38,0,TAMAÑO_BARRA_PRACTICA)
+								self.barra2 = Barra(38,0,TAMAÑO_BARRA_PRACTICA,1)
 
 			# Eventos de las teclas
 			for event in pygame.event.get():
