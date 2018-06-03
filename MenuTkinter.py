@@ -1,4 +1,4 @@
-	# Pong v1.0
+	# Pong v2.0
 	# II Tarea Programada
 	# Taller de Programación
 	# Estudiantes: Abigail Abarca. Jessica Espinoza. Alejandro Ibarra
@@ -11,7 +11,8 @@ import os
 import pygame
 
 ventana = None
-musicOn = 0
+global musicOn
+musicOn = 1
 
 def inicio():
 	global ventana
@@ -67,11 +68,17 @@ def inicio():
 
 	# Funcion para reproducir la musica
 	def playMusic():
-		pygame.mixer.Sound(os.path.join("sounds", "music.ogg")).play(loops = -1)
+		back_music = pygame.mixer.music.load(os.path.join("sounds", "music.ogg"))
+		pygame.mixer.music.play(-1)
 
-	if musicOn == 1:
-		playMusic()
-
+	def toggleMusic():
+		global musicOn
+		if musicOn == 1:
+			musicOn = 0
+			pygame.mixer.music.pause()
+		else:
+			musicOn = 1
+			pygame.mixer.music.unpause()
 
 	# Carga de imagenes
 	racket1cpuicon = loadPicture("1racketcpu.gif")
@@ -379,6 +386,8 @@ def inicio():
 	imagen_idioma.place(x = 600, y = 40)
 	btn_practica = Button(ventana, text="Modo Práctica", command = ventana_practica)
 	btn_practica.place(x=530, y=420)
+	togglemusic_button = Button(ventana, text = 'Toggle Music', command = toggleMusic)
+	togglemusic_button.place(x = 650, y = 420)
 	mainloop()
 
 
