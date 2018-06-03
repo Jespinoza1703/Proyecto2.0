@@ -12,7 +12,7 @@ BLACK = (0,0,0)
 WHITE = (255,255,255)
 L = 20
 
-
+COLORES = [(25, 89, 150), (250, 65, 30), (96, 87, 24), (0, 0, 0)]
 
 # Constantes
 ANCHO = 800
@@ -53,6 +53,7 @@ TAMAÑO_BARRA_PRACTICA = 25
 # dibujar()
 pygame.init()
 
+contador_colores = 0
 total = None
 
 class Juego:
@@ -117,11 +118,12 @@ class Juego:
 
 	# Se va dibujando la matriz cuadro pr cuadro y se plasma en la pantalla
 	def dibujarMatriz(self):
+		global contador_colores
 		for fila in range(self.FILAS):
 			for columna in range(self.COLUMNAS):
 				if self.matriz[fila][columna] == 0:
 					# Si el cierta posición de la matriz hay un 0, se pinta de color negro
-					pygame.draw.rect(self.pantalla, BLACK, [L* columna,L * fila,L,L])
+					pygame.draw.rect(self.pantalla, COLORES[contador_colores], [L* columna,L * fila,L,L])
 				else:
 					# Si el cierta posición de la matriz hay un 0, se pinta de color blanco
 					# Esto es para la bola y las barras
@@ -158,12 +160,9 @@ class Juego:
 					self.nivel += 1 
 					# Si pierde en el nivel 3, vuelve al nivel 1
 					if self.nivel == 4:
-						total1 = total
-						total2 = total
-						total3 = total
 						total = str((time.time()-inicial)*10)
 						print(total)
-						self.archivarTiempos()
+						self.archivarTiempos(total)
 						pygame.quit()
 					# Se limpia la matriz para dibujar las barras del siguiente nivel
 					self.matriz = []
@@ -239,8 +238,7 @@ class Juego:
 						pygame.quit()
 						quit()
 					elif event.key == pygame.K_SPACE:
-						pygame.quit()
-						quit()
+						contador_colores = random.randrange(0, len(COLORES)-1)
 
 			# Aquí se actualiza constántemente la matriz para que
 			# ocurra el movimiento de forma continua
@@ -272,7 +270,11 @@ class Juego:
 		self.barra2.posicionar(self.matriz)
 		pygame.display.update()
 
-	def archivarTiempos(self):  
+	def archivarTiempos(self, total):  
+		vent = Tk()
+		vent.title("Mejores Tiempos de Juego")
+		vent.minsize (800, 500)
+		vent.config(bg="black")
 
 		def unirLista(matriz):  # Invierte las funciones de separar para la modificación del archivo txt
 			if matriz == []:
@@ -285,61 +287,70 @@ class Juego:
 			return file
 
 		def separarTiempos(i):
-			if i == len(listaTiempos):
+			if i == len(highscore):
 				return
-			listaTiempos[i] = listaTiempos[i].replace("\n", "").split(";")
+			highscore[i] = highscore[i].replace("\n", "").split(";")
 			separarTiempos(i + 1)
 		archivo = abrirArchivo("Tiempos.txt", "r")
-		listaTiempos = archivo.readlines()
+		highscore = archivo.readlines()
 		separarTiempos(0)
-		#print(listaTiempos)
+		#print(highscore)
 		archivo.close()
 
-		def scores():
-			global total1, total2, total3
-			hacer = True
-			for i in listaTiempos:
-				print(i[1])
-				if i[1] < str(total1) and hacer:
-					total1 = i[1]
-					print(i[1])
-					for j in listaTiempos:
-						if j[1] < str(total2) and str(total1) < str(total2) and hacer:
-							total2 = j[1]
-							print(i[1])
-							for i in listaTiempos:
-								if i[1] < str(total3) and str(total2) < str(total3) and hacer:
-									total3 = i[1]
-									print(i[1])
-									hacer = False
+		labelNombre = Label(vent, text = "¡Tiempo récord! \n Ingrese sus iniciales:", font = ("arial bold", 30), bg = "black", fg = "yellow")
+		labelNombre.place (x = 200, y = 250)
+		entradaNombre = Entry (vent, font = ("arial", 16), width = 25, bg = "grey")
+		entradaNombre.place (x = 257, y = 380)
 
+		tiempo1 = Label(vent, text = highscore[0][0] + "   " +  str(highscore[0][1]), font = ("arial bold", 16), bg = "black", fg = "white")
+		tiempo1.place (x = 80, y = 100)
+		tiempo2 = Label(vent, text = highscore[1][0] + "   " +  str(highscore[1][1]), font = ("arial bold", 16), bg = "black", fg = "white")
+		tiempo2.place (x = 80, y = 150)
+		tiempo3 = Label(vent, text = highscore[2][0] + "   " +  str(highscore[2][1]), font = ("arial bold", 16), bg = "black", fg = "white")
+		tiempo3.place (x = 80, y = 200)
+
+		def highscores():
+			iniciales = entradaNombre.get()
+			if iniciales != "":
+				if iniciales != highscore[0][0] and total != highscore[0][1]:
+					if iniciales != highscore[1][0] and total != highscore[1][1]:
+						if iniciales != highscore[2][0] and total != highscore[2][1]:
+							return highscores_aux(total, iniciales)
+				else:
+					return "repetido"
+			else:
+				return "Ingrese su iniciales"
+		def highscores_aux(valor, iniciales):
+			if str(valor) < highscore[2][1]:
+				hacer = True
+				if iniciales != "":
+					if str(valor) <= highscore[0][1] and hacer:
+						highscore[2][0] = highscore[1][0]
+						highscore[2][1] = highscore[1][1]
+						highscore[1][0] = highscore[0][0]
+						highscore[1][1] = highscore[0][1]
+						highscore[0][0] = iniciales
+						highscore[0][1] = str(valor)
+						print(highscore[2][0], highscore[2][1], highscore[1][0], highscore[1][1])
+						hacer = False
+					if str(valor) <= highscore[1][1] and valor > int(highscore[0][1]) and hacer:
+						highscore[2][0] = highscore[1][0]
+						highscore[2][1] = highscore[1][1]
+						highscore[1][0] = iniciales
+						highscore[1][1] = str(valor)
+						hacer = False
+					if str(valor) < highscore[2][1] and valor > int(highscore[1][1]) and hacer:
+						highscore[2][0] = iniciales
+						highscore[2][1] = str(valor)
+
+			
+			tiempo1.config(text = highscore[0][0] + "        " + str(highscore[0][1]))
+			tiempo2.config(text = highscore[1][0] + "        " + str(highscore[1][1]))
+			tiempo3.config(text = highscore[2][0] + "        " + str(highscore[2][1]))
 
 
 		def crearVentana(): #Abre una nueva ventana donde hay dos botones: Administrar Apps y Administrar Vendedores
-			global total1, total2, total3
-			scores()
-			vent = Tk()
-			vent.title("Mejores Tiempos de Juego")
-			vent.minsize (800, 500)
-			vent.config(bg="black")
-
-
-			labelNombre = Label(vent, text = "¡Tiempo récord! \n Ingrese sus iniciales:", font = ("arial bold", 30), bg = "black", fg = "yellow")
-			labelNombre.place (x = 200, y = 250)
-			entradaNombre = Entry (vent, font = ("arial", 16), width = 25, bg = "grey")
-			entradaNombre.place (x = 257, y = 380)
-
-			tiempo1 = Label(vent, text = "Tiempo1: " + total1, font = ("arial bold", 16), bg = "black", fg = "white")
-			tiempo1.place (x = 80, y = 100)
-			tiempo2 = Label(vent, text = "Tiempo2: " + total2, font = ("arial bold", 16), bg = "black", fg = "white")
-			tiempo2.place (x = 80, y = 150)
-			tiempo3 = Label(vent, text = "Tiempo3: " + total3, font = ("arial bold", 16), bg = "black", fg = "white")
-			tiempo3.place (x = 80, y = 200)
-
 			def listo():
-				global total, total1, total2, total3
-				for i in listaTiempos:
-					total = i[1]
 				if entradaNombre.get() != "":
 					registrar = open("Tiempos.txt", "a") #abre un archivo
 					registrar.write(entradaNombre.get() + ";" + total +  "\n") #escribe en el archivo
@@ -351,8 +362,10 @@ class Juego:
 
 
 				
-			boton = Button (vent, text = "Listo!",  font = ("arial", 12), width = 6, command = listo)
+			boton = Button (vent, text = "Listo!",  font = ("arial", 12), width = 6, command = highscores)
 			boton.place (x = 120, y = 10)
+			boton = Button (vent, text = "Volver",  font = ("arial", 12), width = 6, command = listo)
+			boton.place (x = 200, y = 10)
 			vent.mainloop()
 		pygame.quit()
 		crearVentana()
