@@ -10,6 +10,7 @@ import os
 
 BLACK = (0,0,0)
 WHITE = (255,255,255)
+GREEN = (0,255,0)
 L = 20
 
 
@@ -53,7 +54,7 @@ TAMAÑO_BARRA_PRACTICA = 25
 # dibujar()
 pygame.init()
 class Juego:
-	def __init__(self, modo, nivel, versus, ventana, tamaño=None, time=TIEMPO_NIVEL1):
+	def __init__(self,trampolin, modo, nivel, versus, ventana, tamaño=None, time=TIEMPO_NIVEL1):
 		self.pantalla = pygame.display.set_mode((ANCHO,LARGO))
 		pygame.display.set_caption("Pong")
 		self.FILAS = 30
@@ -69,6 +70,10 @@ class Juego:
 		self.tamaño = tamaño
 		self.time = time
 		self.ventana = ventana
+		self.trampolin = trampolin
+		self.trampolin1 = Barra(10,5,4,2)
+		self.trampolin2 = Barra(30,15,4,2)
+		self.trampolin3 = Barra(20,10,4,2)
 
 		# Se define el tiempo, tamaño de barra, modo y versus de cada nivel
 		if self.nivel == 1:
@@ -119,6 +124,9 @@ class Juego:
 				if self.matriz[fila][columna] == 0:
 					# Si el cierta posición de la matriz hay un 0, se pinta de color negro
 					pygame.draw.rect(self.pantalla, BLACK, [L* columna,L * fila,L,L])
+				elif self.matriz[fila][columna] == 2:
+					# Si el cierta posición de la matriz hay un 0, se pinta de color negro
+					pygame.draw.rect(self.pantalla, GREEN, [L* columna,L * fila,L,L])
 				else:
 					# Si el cierta posición de la matriz hay un 0, se pinta de color blanco
 					# Esto es para la bola y las barras
@@ -148,7 +156,7 @@ class Juego:
 			# Si el score de alguno de los jugadores es igual a 5
 			clock = pygame.time
 			if self.versus != "practica":
-				if self.bola.get_score1() == 5 or self.bola.get_score2() == 5:
+				if self.bola.get_score1() == 2 or self.bola.get_score2() == 2:
 					# Se reinician los scores
 					self.bola.set_score1(0)
 					self.bola.set_score2(0)
@@ -264,6 +272,16 @@ class Juego:
 		# Posiciona las barras en la matriz
 		self.barra1.posicionar(self.matriz)
 		self.barra2.posicionar(self.matriz)
+		if self.trampolin == 1:
+			if self.nivel == 1:
+				self.trampolin3.posicionar(self.matriz)
+			elif self.nivel == 2:
+				self.trampolin1.posicionar(self.matriz)
+				self.trampolin2.posicionar(self.matriz)
+			elif self.nivel == 3:
+				self.trampolin1.posicionar(self.matriz)
+				self.trampolin2.posicionar(self.matriz)
+				self.trampolin3.posicionar(self.matriz)
 		pygame.display.update()
 
 	def archivarTiempos(self):	
