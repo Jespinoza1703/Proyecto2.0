@@ -149,6 +149,7 @@ class Juego:
 		fuera_juego = False
 		# Genera múltiples eventos pygame.KEYDOWN
 		pygame.key.set_repeat(50, 50)
+		inicial = time.time()
 		while not fuera_juego:
 			# Si el score de alguno de los jugadores es igual a 5
 			if self.versus != "practica":
@@ -160,8 +161,7 @@ class Juego:
 					self.nivel += 1 
 					# Si pierde en el nivel 3, vuelve al nivel 1
 					if self.nivel == 4:
-						total = str((time.time()-inicial)*10)
-						print(total)
+						total = str((time.time()-inicial))
 						self.archivarTiempos(total)
 						pygame.quit()
 					# Se limpia la matriz para dibujar las barras del siguiente nivel
@@ -169,7 +169,6 @@ class Juego:
 					# Se vuelve a crear la matriz
 					self.crearMatriz()
 					# Se definen las condiciones de acuerdo con cada nivel
-					inicial = time.time()
 					if self.nivel == 1:
 						self.tiempo = TIEMPO_NIVEL1
 						if self.modo == "Single":
@@ -297,75 +296,82 @@ class Juego:
 		#print(highscore)
 		archivo.close()
 
-		labelNombre = Label(vent, text = "¡Tiempo récord! \n Ingrese sus iniciales:", font = ("arial bold", 30), bg = "black", fg = "yellow")
-		labelNombre.place (x = 200, y = 250)
-		entradaNombre = Entry (vent, font = ("arial", 16), width = 25, bg = "grey")
-		entradaNombre.place (x = 257, y = 380)
-
-		tiempo1 = Label(vent, text = highscore[0][0] + "   " +  str(highscore[0][1]), font = ("arial bold", 16), bg = "black", fg = "white")
-		tiempo1.place (x = 80, y = 100)
-		tiempo2 = Label(vent, text = highscore[1][0] + "   " +  str(highscore[1][1]), font = ("arial bold", 16), bg = "black", fg = "white")
-		tiempo2.place (x = 80, y = 150)
-		tiempo3 = Label(vent, text = highscore[2][0] + "   " +  str(highscore[2][1]), font = ("arial bold", 16), bg = "black", fg = "white")
-		tiempo3.place (x = 80, y = 200)
 
 		def highscores():
 			iniciales = entradaNombre.get()
 			if iniciales != "":
-				if iniciales != highscore[0][0] and total != highscore[0][1]:
-					if iniciales != highscore[1][0] and total != highscore[1][1]:
-						if iniciales != highscore[2][0] and total != highscore[2][1]:
-							return highscores_aux(total, iniciales)
+				if len(highscore) < 3:
+					registrar = open("Tiempos.txt", "a") #abre un archivo
+					registrar.write(iniciales + ";" + total + "\n") #escribe en el archivo
+					registrar.close()
 				else:
-					return "repetido"
+					if iniciales != highscore[0][0] and total != highscore[0][1]:
+						if iniciales != highscore[1][0] and total != highscore[1][1]:
+							if iniciales != highscore[2][0] and total != highscore[2][1]:
+								return highscores_aux(total, iniciales)
+							else:
+								messagebox.showerror("Error en los datos", "No es record")
+						else:
+							messagebox.showerror("Error en los datos", "No es record")
+					else:
+						messagebox.showerror("Error en los datos", "No es record")
 			else:
-				return "Ingrese su iniciales"
+				messagebox.showerror("Error en los datos", "Ingrese sus iniciales")
+
 		def highscores_aux(valor, iniciales):
-			if str(valor) < highscore[2][1]:
+			if valor < highscore[2][1]:
 				hacer = True
 				if iniciales != "":
-					if str(valor) <= highscore[0][1] and hacer:
+					if valor <= highscore[0][1] and hacer:
 						highscore[2][0] = highscore[1][0]
 						highscore[2][1] = highscore[1][1]
 						highscore[1][0] = highscore[0][0]
 						highscore[1][1] = highscore[0][1]
 						highscore[0][0] = iniciales
-						highscore[0][1] = str(valor)
-						print(highscore[2][0], highscore[2][1], highscore[1][0], highscore[1][1])
+						highscore[0][1] = valor
 						hacer = False
-					if str(valor) <= highscore[1][1] and valor > int(highscore[0][1]) and hacer:
+					if valor <= highscore[1][1] and valor > highscore[0][1] and hacer:
 						highscore[2][0] = highscore[1][0]
 						highscore[2][1] = highscore[1][1]
 						highscore[1][0] = iniciales
-						highscore[1][1] = str(valor)
+						highscore[1][1] = valor
 						hacer = False
-					if str(valor) < highscore[2][1] and valor > int(highscore[1][1]) and hacer:
+					if valor < highscore[2][1] and valor > highscore[1][1] and hacer:
 						highscore[2][0] = iniciales
-						highscore[2][1] = str(valor)
+						highscore[2][1] = valor
 
-			
+			nuevo_texto = "\n".join(unirLista(highscore))
+			archivo_highscores = abrirArchivo("Tiempos.txt", "w")
+			archivo_highscores.write((str(nuevo_texto)))
 			tiempo1.config(text = highscore[0][0] + "        " + str(highscore[0][1]))
 			tiempo2.config(text = highscore[1][0] + "        " + str(highscore[1][1]))
 			tiempo3.config(text = highscore[2][0] + "        " + str(highscore[2][1]))
 
+		labelNombre = Label(vent, text = "¡Tiempo récord! \n Ingrese sus iniciales:", font = ("arial bold", 30), bg = "black", fg = "yellow")
+		labelNombre.place (x = 200, y = 250)
+		entradaNombre = Entry (vent, font = ("arial", 16), width = 25, bg = "grey")
+		entradaNombre.place (x = 257, y = 380)
 
-		def crearVentana(): #Abre una nueva ventana donde hay dos botones: Administrar Apps y Administrar Vendedores
-			def listo():
-				if entradaNombre.get() != "":
-					registrar = open("Tiempos.txt", "a") #abre un archivo
-					registrar.write(entradaNombre.get() + ";" + total +  "\n") #escribe en el archivo
-					registrar.close()
-					vent.destroy()
-					self.ventana.deiconify()
-				else:
-					messagebox.showerror("Error en los datos", "Ingrese sus iniciales")
+		if len(highscore) == 3:
+			tiempo1 = Label(vent, text = highscore[0][0] + "   " +  str(highscore[0][1]), font = ("arial bold", 16), bg = "black", fg = "white")
+			tiempo1.place (x = 80, y = 100)
+			tiempo2 = Label(vent, text = highscore[1][0] + "   " +  str(highscore[1][1]), font = ("arial bold", 16), bg = "black", fg = "white")
+			tiempo2.place (x = 80, y = 150)
+			tiempo3 = Label(vent, text = highscore[2][0] + "   " +  str(highscore[2][1]), font = ("arial bold", 16), bg = "black", fg = "white")
+			tiempo3.place (x = 80, y = 200)
+		else:
+			label = Label(vent,text = "Nuevo record!", bg = "black", fg = "white", font = ("arial bold", 16))
+			label.place(x = 80, y = 100)
 
+		boton = Button (vent, text = "Agregar",  font = ("arial", 12), width = 6, command = highscores)
+		boton.place (x = 120, y = 10)
 
-				
-			boton = Button (vent, text = "Listo!",  font = ("arial", 12), width = 6, command = highscores)
-			boton.place (x = 120, y = 10)
-			boton = Button (vent, text = "Volver",  font = ("arial", 12), width = 6, command = listo)
-			boton.place (x = 200, y = 10)
-			vent.mainloop()
+		def listo(): #Abre una nueva ventana donde hay dos botones: Administrar Apps y Administrar Vendedores
+			vent.destroy()
+			pygame.quit()
+			self.ventana.deiconify()
+
+		boton = Button (vent, text = "Listo!",  font = ("arial", 12), width = 6, command = listo)
+		boton.place (x = 200, y = 10)
+		vent.mainloop()
 		pygame.quit()
-		crearVentana()
