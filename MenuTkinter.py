@@ -33,6 +33,7 @@ def inicio():
 	 
 	# Variables globales\
 	music = True
+	 
 
 	# Hace la ventana
 	ventana = Tk ( ) 
@@ -46,6 +47,8 @@ def inicio():
 
 	# Iniciar Pygame
 	pygame.init()
+
+	
 
 	# Funcion para cambiar idioma de textos
 	def cambiarIdioma():
@@ -96,25 +99,25 @@ def inicio():
 	#Opcion de jugar con una paleta contra otro humano
 	def Single_humano():
 		ventana.withdraw()
-		juego = Juego("Single", 1, "humano", ventana)
+		juego = Juego(trampolin.get(),"Single", 1, "humano", ventana)
 		juego.jugar()
 
 	# Opcion de jugar con una paleta contra el CPU
 	def Single_cpu():
 		ventana.withdraw()
-		juego = Juego("Single", 1, "cpu", ventana)
+		juego = Juego(trampolin.get(),"Single", 1, "cpu", ventana)
 		juego.jugar()
 
 	# Opcion de jugar con dos paletas contra otro humano
 	def Double_humano():
 		ventana.withdraw()
-		juego = Juego("Double", 1, "humano", ventana)
+		juego = Juego(trampolin.get(),"Double", 1, "humano", ventana)
 		juego.jugar()
 
 	# Opcion de jugar con dos paletas contra el CPU
 	def Double_cpu():
 		ventana.withdraw()
-		juego = Juego("Double", 1, "cpu", ventana)
+		juego = Juego(trampolin.get(),"Double", 1, "cpu", ventana)
 		juego.jugar()
 
 	# Ventana de informacion de programadores
@@ -201,83 +204,83 @@ def inicio():
 
 		def practica9_tiempo1_S():
 			ventana.withdraw()
-			juego = Juego("Single", 1, "practica", tamaño=9, time=TIEMPO_NIVEL1)
+			juego = Juego(trampolin.get(),"Single", 1, "practica", tamaño=9, time=TIEMPO_NIVEL1)
 			juego.jugar()	
 		def practica9_tiempo1_D():
 			ventana.withdraw()
-			juego = Juego("Double", 1, "practica", tamaño=9, time=TIEMPO_NIVEL1)
+			juego = Juego(trampolin.get(),"Double", 1, "practica", tamaño=9, time=TIEMPO_NIVEL1)
 			juego.jugar()	
 
 		def practica9_tiempo2_S():
 			ventana.withdraw()
-			juego = Juego("Single", 1, "practica", tamaño=9, time=TIEMPO_NIVEL2)
+			juego = Juego(trampolin.get(),"Single", 1, "practica", tamaño=9, time=TIEMPO_NIVEL2)
 			juego.jugar()
 		def practica9_tiempo2_D():
 			ventana.withdraw()
-			juego = Juego("Double", 1, "practica", tamaño=9, time=TIEMPO_NIVEL2)
+			juego = Juego(trampolin.get(),"Double", 1, "practica", tamaño=9, time=TIEMPO_NIVEL2)
 			juego.jugar()	
 
 		def practica9_tiempo3_S():
 			ventana.withdraw()
-			juego = Juego("Single", 1, "practica", tamaño=9, time=TIEMPO_NIVEL3)
+			juego = Juego(trampolin.get(),"Single", 1, "practica", tamaño=9, time=TIEMPO_NIVEL3)
 			juego.jugar()
 		def practica9_tiempo3_D():
 			ventana.withdraw()
-			juego = Juego("Double", 1, "practica", tamaño=9, time=TIEMPO_NIVEL3)
+			juego = Juego(trampolin.get(),"Double", 1, "practica", tamaño=9, time=TIEMPO_NIVEL3)
 			juego.jugar()	
 
 		def practica6_tiempo1_S():
 			ventana.withdraw()
-			juego = Juego("Single", 1, "practica", tamaño=6, time=TIEMPO_NIVEL1)
+			juego = Juego(trampolin.get(),"Single", 1, "practica", tamaño=6, time=TIEMPO_NIVEL1)
 			juego.jugar()
 		def practica6_tiempo1_D():
 			ventana.withdraw()
-			juego = Juego("Double", 1, "practica", tamaño=6, time=TIEMPO_NIVEL1)
+			juego = Juego(trampolin.get(),"Double", 1, "practica", tamaño=6, time=TIEMPO_NIVEL1)
 			juego.jugar()
 
 		def practica6_tiempo2_S():
 			ventana.withdraw()
-			juego = Juego("Single", 1, "practica", tamaño=6, time=TIEMPO_NIVEL2)
+			juego = Juego(trampolin.get(),"Single", 1, "practica", tamaño=6, time=TIEMPO_NIVEL2)
 			juego.jugar()
 		def practica6_tiempo2_D():
 			ventana.withdraw()
-			juego = Juego("Double", 1, "practica", tamaño=6, time=TIEMPO_NIVEL2)
+			juego = Juego(trampolin.get(),"Double", 1, "practica", tamaño=6, time=TIEMPO_NIVEL2)
 			juego.jugar()
 
 		def practica6_tiempo3_S():
 			ventana.withdraw()
-			juego = Juego("Single", 1, "practica", tamaño=6, time=TIEMPO_NIVEL3)
+			juego = Juego(trampolin.get(),"Single", 1, "practica", tamaño=6, time=TIEMPO_NIVEL3)
 			juego.jugar()
 		def practica6_tiempo3_D():
 			ventana.withdraw()
-			juego = Juego("Single", 1, "practica", tamaño=6, time=TIEMPO_NIVEL3)
+			juego = Juego(trampolin.get(),"Single", 1, "practica", tamaño=6, time=TIEMPO_NIVEL3)
 			juego.jugar()
 
 		def practica3_tiempo1_S():
 			ventana.withdraw()
-			juego = Juego("Single", 1, "practica", tamaño=3, time=TIEMPO_NIVEL1)
+			juego = Juego(trampolin.get(),"Single", 1, "practica", tamaño=3, time=TIEMPO_NIVEL1)
 			juego.jugar()
 		def practica3_tiempo1_D():
 			ventana.withdraw()
-			juego = Juego("Double", 1, "practica", tamaño=3, time=TIEMPO_NIVEL1)
+			juego = Juego(trampolin.get(),"Double", 1, "practica", tamaño=3, time=TIEMPO_NIVEL1)
 			juego.jugar()
 
 		def practica3_tiempo2_S():
 			ventana.withdraw()
-			juego = Juego("Single", 1, "practica", tamaño=3, time=TIEMPO_NIVEL2)
+			juego = Juego(trampolin.get(),"Single", 1, "practica", tamaño=3, time=TIEMPO_NIVEL2)
 			juego.jugar()
 		def practica3_tiempo2_D():
 			ventana.withdraw()
-			juego = Juego("Double", 1, "practica", tamaño=3, time=TIEMPO_NIVEL2)
+			juego = Juego(trampolin.get(),"Double", 1, "practica", tamaño=3, time=TIEMPO_NIVEL2)
 			juego.jugar()
 
 		def practica3_tiempo3_S():
 			ventana.withdraw()
-			juego = Juego("Single", 1, "practica", tamaño=3, time=TIEMPO_NIVEL3)
+			juego = Juego(trampolin.get(),"Single", 1, "practica", tamaño=3, time=TIEMPO_NIVEL3)
 			juego.jugar()
 		def practica3_tiempo3_D():
 			ventana.withdraw()
-			juego = Juego("Double", 1, "practica", tamaño=3, time=TIEMPO_NIVEL3)
+			juego = Juego(trampolin.get(),"Double", 1, "practica", tamaño=3, time=TIEMPO_NIVEL3)
 			juego.jugar()
 
 		label9 = Label(modo_practica, text="9", font = "Helvetica 45")
@@ -336,6 +339,7 @@ def inicio():
 		btn3_timepo3_S.place(x = 600, y = 300)
 		btn3_timepo3_D = Button(modo_practica, text= "TIEMPO_NIVEL3", command = practica3_tiempo3_D)
 		btn3_timepo3_D.place(x = 600, y = 330)
+		
 
 		def back():
 			modo_practica.destroy()
@@ -363,6 +367,7 @@ def inicio():
 	help_label.place(x = 110, y = 315)
 
 	# Botones de inicio de juego
+	trampolin = IntVar()
 	oneplayer_button = Button(ventana, image = racket1cpuicon, command = Single_cpu)
 	oneplayer_button.place(x = 330, y = 100)
 	twoplayer_button = Button(ventana, image = racket12picon, command = Single_humano)
@@ -378,8 +383,12 @@ def inicio():
 	imagen_idioma = Button(ventana, image=imagenes[0][IDIOMA], font = "Helvetica 16", command = cambiarIdioma)
 	imagen_idioma.place(x = 600, y = 40)
 	btn_practica = Button(ventana, text="Modo Práctica", command = ventana_practica)
-	btn_practica.place(x=530, y=420)
+	btn_practica.place(x=350, y=420)
+	c = Checkbutton(ventana, text = "Activar trampolin" , variable = trampolin,onvalue = 1, offvalue = 0)
+	c.place(x = 580, y = 420)
 	mainloop()
+
+	
 
 
 inicio()

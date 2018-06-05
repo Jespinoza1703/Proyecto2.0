@@ -76,7 +76,7 @@ class Bola:
 			pygame.mixer.Sound(os.path.join('sounds', 'bounce.wav')).play()
 			# Si paleta es mayor a 9
 			if matriz[self.y - 6][self.x + 1] == 1 or matriz[self.y + 6][self.y + 1] == 1:
-				print("WWWERTYULFDSAZVBN;MNBFDSDUIKJHAZXCV;SO")
+				#print("WWWERTYULFDSAZVBN;MNBFDSDUIKJHAZXCV;SO")
 				if matriz[self.y - 5][self.x + 1] == 0:
 					self.direccion = random.randrange(-1, 2)
 					self.derecha = False
@@ -238,8 +238,15 @@ class Bola:
 				else:
 					self.direccion = 0
 					self.derecha = True
+		elif self.x < 39 and self.x > 1:
+                        if matriz[self.y + self.vy][self.x + self.vx] == 2:
+                                self.direccion = random.randrange(-1, 2)
+                        elif matriz[self.y - self.vy][self.x+self.vx] == 2:
+                                self.direccion = random.randrange(-1, 2)
+                        elif matriz[self.y][self.x+self.vx] == 2:
+                                self.direccion = random.randrange(-1, 2)
 		# Si derecha es true, o sea, hacia la derecha
-		if self.derecha == True: 
+		if self.derecha == True and self.x < 40: 
 			if self.direccion == -1:
 				self.x += self.vx
 				self.y += self.vy
