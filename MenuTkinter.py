@@ -13,6 +13,11 @@ import pygame
 ventana = None
 global musicOn
 musicOn = 1
+musicOn = 0
+IDIOMA = 0
+ESP = 0
+ENG = 1
+
 
 def inicio():
 	global ventana
@@ -29,10 +34,7 @@ def inicio():
 	               ["Acerca de", "About"],#5
 	                ]
 	 
-	# Variables globales
-	IDIOMA = 0
-	ESP = 0
-	ENG = 1
+	# Variables globales\
 	music = True
 
 	# Hace la ventana
@@ -53,7 +55,7 @@ def inicio():
 	    global IDIOMA
 	    IDIOMA -= IDIOMA
 	    oneplayer_label.config(text=traduccion[0][IDIOMA])
-	    oneplayertworacket_label.config(text=traduccion[2][IDIOMA])
+	    oneplayertworacket_label.config(text=traduccion[1][IDIOMA])
 	    twoplayer_label.config(text=traduccion[2][IDIOMA])
 	    twoplayertworacket_label.config(text=traduccion[3][IDIOMA])
 	    help_label.config(text=traduccion[4][IDIOMA])
@@ -67,18 +69,6 @@ def inicio():
 	        return photo
 
 	# Funcion para reproducir la musica
-	def playMusic():
-		back_music = pygame.mixer.music.load(os.path.join("sounds", "music.ogg"))
-		pygame.mixer.music.play(-1)
-
-	def toggleMusic():
-		global musicOn
-		if musicOn == 1:
-			musicOn = 0
-			pygame.mixer.music.pause()
-		else:
-			musicOn = 1
-			pygame.mixer.music.unpause()
 
 	# Carga de imagenes
 	racket1cpuicon = loadPicture("1racketcpu.gif")
@@ -195,7 +185,6 @@ def inicio():
 			helpventana.destroy()
 			ventana.deiconify()
 
-<<<<<<< HEAD
 		backbutton = Button(helpcanvas, image = backicon, command = back)
 		backbutton.place(x = 20, y = 20)
 
@@ -386,9 +375,7 @@ def inicio():
 	imagen_idioma = Button(ventana, image=imagenes[0][IDIOMA], font = "Helvetica 16", command = cambiarIdioma)
 	imagen_idioma.place(x = 600, y = 40)
 	btn_practica = Button(ventana, text="Modo Práctica", command = ventana_practica)
-	btn_practica.place(x=530, y=420)
-	togglemusic_button = Button(ventana, text = 'Toggle Music', command = toggleMusic)
-	togglemusic_button.place(x = 650, y = 420)
+	btn_practica.place(x=400, y=420)
 	mainloop()
 
 
