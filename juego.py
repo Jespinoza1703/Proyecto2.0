@@ -3,17 +3,20 @@ from tkinter import *
 from tkinter import messagebox
 from barra import Barra
 from bola import Bola
-from barra_doble import Barra_doble
 import time
 import random
 import os
+import serial
+
+#Puerto serial de Arduino
+#ser = serial.Serial('/dev/cu.itead-DevB', 9600, timeout=0)
+#ser = serial.Serial('/dev/cu.usbmodem1411', 9600, timeout=0)
 
 BLACK = (0,0,0)
 WHITE = (255,255,255)
 GREEN = (0,255,0)
 L = 20
 
-COLORES = [(25, 89, 150), (250, 65, 30), (96, 87, 24), (0, 0, 0)]
 
 # Constantes
 ANCHO = 800
@@ -53,6 +56,7 @@ TAMAÑO_BARRA_PRACTICA = 25
 # jugar()
 # dibujar()
 
+
 contador_colores = 0
 total = None
 
@@ -77,6 +81,11 @@ class Juego:
 		self.trampolin1 = Barra(10,5,4,2)
 		self.trampolin2 = Barra(30,15,4,2)
 		self.trampolin3 = Barra(20,10,4,2)
+		self.musicOn = 1
+		self.musicSpeed = 1
+		self.background_color = (0, 0, 0)
+
+		self.playMusic()
 
 		# Se define el tiempo, tamaño de barra, modo y versus de cada nivel
 		if self.nivel == 1:
@@ -110,7 +119,6 @@ class Juego:
 					elif self.versus == "cpu":
 						self.CPU = 1
 
-
 	# Se crea auna matriz binaria(compuesta por ahora por 0s), de 25 filas x 40 columnas
 	def crearMatriz(self):
 		for i in range(self.FILAS):
@@ -127,7 +135,7 @@ class Juego:
 			for columna in range(self.COLUMNAS):
 				if self.matriz[fila][columna] == 0:
 					# Si el cierta posición de la matriz hay un 0, se pinta de color negro
-					pygame.draw.rect(self.pantalla, BLACK, [L* columna,L * fila,L,L])
+					pygame.draw.rect(self.pantalla, self.background_color, [L* columna,L * fila,L,L])
 				elif self.matriz[fila][columna] == 2:
 					# Si el cierta posición de la matriz hay un 0, se pinta de color negro
 					pygame.draw.rect(self.pantalla, GREEN, [L* columna,L * fila,L,L])
@@ -165,7 +173,9 @@ class Juego:
 					self.bola.set_score1(0)
 					self.bola.set_score2(0)
 					# Se pasa de nivel
-					self.nivel += 1 
+					self.nivel += 1
+					self.musicSpeed += 1
+					self.playMusic()
 					# Si pierde en el nivel 3, vuelve al nivel 1
 					if self.nivel == 4:
 						total = str((time.time()-inicial))
@@ -202,15 +212,14 @@ class Juego:
 						else:
 							self.barra1 = Barra_doble(1,2,9,13,TAMAÑO_BARRA_3)
 							self.barra2 = Barra_doble(38,12,30,3,TAMAÑO_BARRA_3)
-
-
-					
 			else:
 				if self.bola.get_score1() == 100:
 					# Se reinician los scores
 					self.bola.set_score1(0)
 					# Se pasa de nivel
 					self.nivel += 1
+					self.musicSpeed +=1 
+					self.playMusic()
 					# Se limpia la matriz para dibujar las barras del siguiente nivel
 					self.matriz = []
 					# Se vuelve a crear la matriz
@@ -254,6 +263,9 @@ class Juego:
 
 			self.dibujar()
 
+			# Lee los estimulos del Arduino
+			self.leerArduino()
+
 			# se llama la función cpu solo si la variable CPU es igual a 1
 			if self.CPU == 1:
 				self.cpu()
@@ -287,6 +299,49 @@ class Juego:
 				self.trampolin2.posicionar(self.matriz)
 				self.trampolin3.posicionar(self.matriz)
 		pygame.display.update()
+
+	def playMusic(self):
+		if self.musicSpeed == 1:
+			back_music = pygame.mixer.music.load(os.path.join("sounds", "music.ogg"))
+		elif self.musicSpeed == 2:
+			back_music = pygame.mixer.music.load(os.path.join("sounds", "music_speed2.ogg"))
+		elif self.musicSpeed == 3:
+			back_music = pygame.mixer.music.load(os.path.join("sounds", "music_speed3.ogg"))
+		if self.musicOn == 1:
+			pygame.mixer.music.play(-1)
+		else:
+			pygame.mixer.music.play(-1)
+			pygame.mixer.music.pause()
+
+	# Cambia el color por uno aleatorio
+	def colorCycle(self):
+		self.background_color = (random.randrange(0, 256), random.randrange(0, 256), random.randrange(0, 256))
+
+	# Lee las instrucciones del Arduino con Pyserial
+	def leerArduino(self):
+		try:
+			entrada = str(ser.readline())
+			datos = entrada[entrada.index("") + 1: entrada.index("\\")]
+			comando = datos[:datos.index("%")]
+			print(comando)
+			if comando == "'P1_UP":
+				self.barra1.mover(1, self.matriz)
+			elif comando == "'P1_DOWN":
+				self.barra1.mover(-1, self.matriz)
+			elif comando == "'MUTE":
+				if self.musicOn == 1:
+					self.musicOn = 0
+					pygame.mixer.music.pause()
+					self.bola.set_mute(1)
+				else:
+					self.musicOn = 1
+					pygame.mixer.music.unpause()
+					self.bola.set_mute(0)
+			elif comando == "'COLOR":
+				self.colorCycle()
+		except:
+			print('NO INPUT')
+			time.sleep(0.0001)
 
 	def archivarTiempos(self, total):  
 		vent = Tk()
@@ -323,6 +378,7 @@ class Juego:
 					registrar = open("Tiempos.txt", "a") #abre un archivo
 					registrar.write(iniciales + ";" + total + "\n") #escribe en el archivo
 					registrar.close()
+					
 				else:
 					if iniciales != highscore[0][0] and total != highscore[0][1]:
 						if iniciales != highscore[1][0] and total != highscore[1][1]:
@@ -336,6 +392,7 @@ class Juego:
 						messagebox.showerror("Error en los datos", "No es record")
 			else:
 				messagebox.showerror("Error en los datos", "Ingrese sus iniciales")
+
 
 		def highscores_aux(valor, iniciales):
 			if valor < highscore[2][1]:
@@ -428,3 +485,4 @@ class Juego:
 				if event.type == pygame.KEYDOWN: #al presionar una tecla
 					if event.key == pygame.K_p:
 						pausado = False
+		pygame.quit()
