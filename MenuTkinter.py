@@ -11,13 +11,10 @@ import os
 import pygame
 
 ventana = None
-global musicOn
-musicOn = 1
-musicOn = 0
+
 IDIOMA = 0
 ESP = 0
 ENG = 1
-
 
 def inicio():
 	global ventana
@@ -34,9 +31,10 @@ def inicio():
 	               ["Acerca de", "About"],#5
 	                ]
 	 
-	# Variables globales\
-	music = True
-	 
+	# Variables globales
+	IDIOMA = 0
+	ESP = 0
+	ENG = 1
 
 	# Hace la ventana
 	ventana = Tk ( ) 
@@ -46,12 +44,10 @@ def inicio():
 	ventana.minsize(800, 500) 
 	# El tamaño no se puede modificar
 	ventana.resizable (width = NO, height = NO) 
-	ventana.config(bg="white")
+	ventana.config(bg="black")
 
 	# Iniciar Pygame
 	pygame.init()
-
-	
 
 	# Funcion para cambiar idioma de textos
 	def cambiarIdioma():
@@ -70,8 +66,6 @@ def inicio():
 	        route = os.path.join("images", name)
 	        photo = PhotoImage(file = route)
 	        return photo
-
-	# Funcion para reproducir la musica
 
 	# Carga de imagenes
 	racket1cpuicon = loadPicture("1racketcpu.gif")
@@ -336,7 +330,6 @@ def inicio():
 		btn3_timepo3_S.place(x = 600, y = 300)
 		btn3_timepo3_D = Button(modo_practica, text= "TIEMPO_NIVEL3", command = practica3_tiempo3_D)
 		btn3_timepo3_D.place(x = 600, y = 330)
-		
 
 		def back():
 			modo_practica.destroy()
@@ -363,8 +356,9 @@ def inicio():
 	help_label = Label(ventana, text=traduccion[4][IDIOMA], font = "Helvetica 20")
 	help_label.place(x = 110, y = 315)
 
-	# Botones de inicio de juego
 	trampolin = IntVar()
+
+	# Botones de inicio de juego
 	oneplayer_button = Button(ventana, image = racket1cpuicon, command = Single_cpu)
 	oneplayer_button.place(x = 330, y = 100)
 	twoplayer_button = Button(ventana, image = racket12picon, command = Single_humano)
@@ -384,8 +378,5 @@ def inicio():
 	c = Checkbutton(ventana, text = "Activar trampolin" , variable = trampolin,onvalue = 1, offvalue = 0)
 	c.place(x = 580, y = 420)
 	mainloop()
-
-	
-
 
 inicio()

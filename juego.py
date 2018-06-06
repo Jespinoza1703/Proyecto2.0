@@ -2,6 +2,7 @@ import pygame
 from tkinter import *
 from tkinter import messagebox
 from barra import Barra
+from barra_doble import Barra_doble
 from bola import Bola
 import time
 import random
@@ -17,7 +18,6 @@ WHITE = (255,255,255)
 GREEN = (0,255,0)
 L = 20
 
-
 # Constantes
 ANCHO = 800
 LARGO = 500
@@ -30,12 +30,6 @@ TAMAÑO_BARRA_1 = 9
 TAMAÑO_BARRA_2 = 6
 TAMAÑO_BARRA_3 = 3
 TAMAÑO_BARRA_PRACTICA = 25
-
-
-	
-
-
-	
 
 # Clase Juego:
 # Atributos:
@@ -55,7 +49,6 @@ TAMAÑO_BARRA_PRACTICA = 25
 # cpu()
 # jugar()
 # dibujar()
-
 
 contador_colores = 0
 total = None
@@ -130,7 +123,6 @@ class Juego:
 
 	# Se va dibujando la matriz cuadro pr cuadro y se plasma en la pantalla
 	def dibujarMatriz(self):
-		global contador_colores
 		for fila in range(self.FILAS):
 			for columna in range(self.COLUMNAS):
 				if self.matriz[fila][columna] == 0:
@@ -168,7 +160,7 @@ class Juego:
 		while not fuera_juego:
 			# Si el score de alguno de los jugadores es igual a 5
 			if self.versus != "practica":
-				if self.bola.get_score1() == 2 or self.bola.get_score2() == 2:
+				if self.bola.get_score1() == 1 or self.bola.get_score2() == 1:
 					# Se reinician los scores
 					self.bola.set_score1(0)
 					self.bola.set_score2(0)
@@ -255,7 +247,8 @@ class Juego:
 					elif event.key == pygame.K_p:
 						self.pausa()
 					elif event.key == pygame.K_SPACE:
-						contador_colores = random.randrange(0, len(COLORES)-1)
+						pygame.quit()
+						quit()
 
 			# Aquí se actualiza constántemente la matriz para que
 			# ocurra el movimiento de forma continua
@@ -264,7 +257,8 @@ class Juego:
 			self.dibujar()
 
 			# Lee los estimulos del Arduino
-			self.leerArduino()
+			#self.leerArduino()
+			#self.sendArduino()
 
 			# se llama la función cpu solo si la variable CPU es igual a 1
 			if self.CPU == 1:
@@ -328,6 +322,10 @@ class Juego:
 				self.barra1.mover(1, self.matriz)
 			elif comando == "'P1_DOWN":
 				self.barra1.mover(-1, self.matriz)
+			elif comando == "'P2_UP":
+				self.barra2.mover(1, self.matriz)
+			elif comando == "'P2_DOWN":
+				self.barra2.mover(-1, self.matriz)
 			elif comando == "'MUTE":
 				if self.musicOn == 1:
 					self.musicOn = 0
@@ -343,11 +341,39 @@ class Juego:
 			print('NO INPUT')
 			time.sleep(0.0001)
 
+	def sendArduino(self):
+		if self.bola.get_score1() == 0:
+			ser.write(b'0')
+		elif self.bola.get_score1() == 1:
+			ser.write(b'1')
+		elif self.bola.get_score1() == 2:
+			ser.write(b'2')
+		elif self.bola.get_score1() == 3:
+			ser.write(b'3')
+		elif self.bola.get_score1() == 4:
+			ser.write(b'4')
+		elif self.bola.get_score1() == 5:
+			ser.write(b'5')
+		if self.bola.get_score2() == 0:
+			ser.write(b'6')
+		elif self.bola.get_score2() == 1:
+			ser.write(b'7')
+		elif self.bola.get_score2() == 2:
+			ser.write(b'8')
+		elif self.bola.get_score2() == 3:
+			ser.write(b'9')
+		elif self.bola.get_score2() == 4:
+			ser.write(b':')
+		elif self.bola.get_score2() == 5:
+			ser.write(b';')
+
+
 	def archivarTiempos(self, total):  
 		vent = Tk()
 		vent.title("Mejores Tiempos de Juego")
 		vent.minsize (800, 500)
 		vent.config(bg="black")
+		pygame.quit()
 
 		def unirLista(matriz):  # Invierte las funciones de separar para la modificación del archivo txt
 			if matriz == []:
@@ -442,7 +468,7 @@ class Juego:
 		boton = Button (vent, text = "Agregar",  font = ("arial", 12), width = 6, command = highscores)
 		boton.place (x = 120, y = 10)
 
-		def listo(): #Abre una nueva ventana donde hay dos botones: Administrar Apps y Administrar Vendedores
+		def listo():
 			vent.destroy()
 			pygame.quit()
 			self.ventana.deiconify()
