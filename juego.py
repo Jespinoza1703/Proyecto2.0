@@ -52,7 +52,6 @@ TAMAÑO_BARRA_PRACTICA = 25
 # cpu()
 # jugar()
 # dibujar()
-pygame.init()
 
 contador_colores = 0
 total = None
@@ -128,14 +127,10 @@ class Juego:
 			for columna in range(self.COLUMNAS):
 				if self.matriz[fila][columna] == 0:
 					# Si el cierta posición de la matriz hay un 0, se pinta de color negro
-<<<<<<< HEAD
-					pygame.draw.rect(self.pantalla, COLORES[contador_colores], [L* columna,L * fila,L,L])
-=======
 					pygame.draw.rect(self.pantalla, BLACK, [L* columna,L * fila,L,L])
 				elif self.matriz[fila][columna] == 2:
 					# Si el cierta posición de la matriz hay un 0, se pinta de color negro
 					pygame.draw.rect(self.pantalla, GREEN, [L* columna,L * fila,L,L])
->>>>>>> origin/Working
 				else:
 					# Si el cierta posición de la matriz hay un 0, se pinta de color blanco
 					# Esto es para la bola y las barras
@@ -319,7 +314,6 @@ class Juego:
 		separarTiempos(0)
 		#print(highscore)
 		archivo.close()
-<<<<<<< HEAD
 
 
 		def highscores():
@@ -396,11 +390,10 @@ class Juego:
 			pygame.quit()
 			self.ventana.deiconify()
 
-		boton = Button (vent, text = "Listo!",  font = ("arial", 12), width = 6, command = listo)
+		boton = Button (vent, text = "Volver al menú",  font = ("arial", 12), width = 6, command = listo)
 		boton.place (x = 200, y = 10)
 		vent.mainloop()
-		pygame.quit()
-=======
+
 		def crearVentana(): #Abre una nueva ventana donde hay dos botones: Administrar Apps y Administrar Vendedores
 			vent = Tk()
 			vent.title("Mejores Tiempos de Juego")
@@ -435,4 +428,3 @@ class Juego:
 				if event.type == pygame.KEYDOWN: #al presionar una tecla
 					if event.key == pygame.K_p:
 						pausado = False
->>>>>>> origin/Working
