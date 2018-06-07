@@ -160,7 +160,7 @@ class Juego:
 		while not fuera_juego:
 			# Si el score de alguno de los jugadores es igual a 5
 			if self.versus != "practica":
-				if self.bola.get_score1() == 1 or self.bola.get_score2() == 1:
+				if self.bola.get_score1() == 5 or self.bola.get_score2() == 5:
 					# Se reinician los scores
 					self.bola.set_score1(0)
 					self.bola.set_score2(0)
