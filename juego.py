@@ -136,7 +136,7 @@ class Juego:
 					# Esto es para la bola y las barras
 					pygame.draw.rect(self.pantalla, WHITE, [L* columna,L * fila,L,L])
 		# Define cada cuánto tiempo se va a actualizar la matriz
-		time.sleep(self.tiempo)
+		time.sleep(self.time)
 		# Sibuja una línea blanca en medio de la pantalla
 		pygame.draw.line(self.pantalla, WHITE, [ANCHO//2, 0], [ANCHO//2,LARGO], 4)
 
@@ -283,15 +283,27 @@ class Juego:
 		self.barra1.posicionar(self.matriz)
 		self.barra2.posicionar(self.matriz)
 		if self.trampolin == 1:
-			if self.nivel == 1:
-				self.trampolin3.posicionar(self.matriz)
-			elif self.nivel == 2:
-				self.trampolin1.posicionar(self.matriz)
-				self.trampolin2.posicionar(self.matriz)
-			elif self.nivel == 3:
-				self.trampolin1.posicionar(self.matriz)
-				self.trampolin2.posicionar(self.matriz)
-				self.trampolin3.posicionar(self.matriz)
+			if self.versus == "practica":
+				if self.time == TIEMPO_NIVEL1:
+					self.trampolin3.posicionar(self.matriz)
+				elif self.time == TIEMPO_NIVEL2:
+					self.trampolin1.posicionar(self.matriz)
+					self.trampolin2.posicionar(self.matriz)
+				elif self.time == TIEMPO_NIVEL3:
+					self.trampolin1.posicionar(self.matriz)
+					self.trampolin2.posicionar(self.matriz)
+					self.trampolin3.posicionar(self.matriz)
+
+			else:
+				if self.nivel == 1:
+					self.trampolin3.posicionar(self.matriz)
+				elif self.nivel == 2:
+					self.trampolin1.posicionar(self.matriz)
+					self.trampolin2.posicionar(self.matriz)
+				elif self.nivel == 3:
+					self.trampolin1.posicionar(self.matriz)
+					self.trampolin2.posicionar(self.matriz)
+					self.trampolin3.posicionar(self.matriz)
 		pygame.display.update()
 
 	def playMusic(self):
@@ -342,31 +354,31 @@ class Juego:
 			print('NO INPUT')
 			time.sleep(0.0001)
 
-	def sendArduino(self):
-		if self.bola.get_score1() == 0:
-			ser.write(b'0')
-		elif self.bola.get_score1() == 1:
-			ser.write(b'1')
-		elif self.bola.get_score1() == 2:
-			ser.write(b'2')
-		elif self.bola.get_score1() == 3:
-			ser.write(b'3')
-		elif self.bola.get_score1() == 4:
-			ser.write(b'4')
-		elif self.bola.get_score1() == 5:
-			ser.write(b'5')
-		if self.bola.get_score2() == 0:
-			ser.write(b'6')
-		elif self.bola.get_score2() == 1:
-			ser.write(b'7')
-		elif self.bola.get_score2() == 2:
-			ser.write(b'8')
-		elif self.bola.get_score2() == 3:
-			ser.write(b'9')
-		elif self.bola.get_score2() == 4:
-			ser.write(b':')
-		elif self.bola.get_score2() == 5:
-			ser.write(b';')
+	#def sendArduino(self):
+	#	if self.bola.get_score1() == 0:
+	#		ser.write(b'0')
+	#	elif self.bola.get_score1() == 1:
+	#		ser.write(b'1')
+	#	elif self.bola.get_score1() == 2:
+	#		ser.write(b'2')
+	#	elif self.bola.get_score1() == 3:
+	#		ser.write(b'3')
+	#	elif self.bola.get_score1() == 4:
+	#		ser.write(b'4')
+	#	elif self.bola.get_score1() == 5:
+	#		ser.write(b'5')
+	#	if self.bola.get_score2() == 0:
+	#		ser.write(b'6')
+	#	elif self.bola.get_score2() == 1:
+	#		ser.write(b'7')
+	#	elif self.bola.get_score2() == 2:
+	#		ser.write(b'8')
+	#	elif self.bola.get_score2() == 3:
+	#		ser.write(b'9')
+	#	elif self.bola.get_score2() == 4:
+	#		ser.write(b':')
+	#	elif self.bola.get_score2() == 5:
+	#		ser.write(b';')
 
 
 	def archivarTiempos(self, total):  

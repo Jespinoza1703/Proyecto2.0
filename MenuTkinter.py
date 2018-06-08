@@ -95,25 +95,25 @@ def inicio():
 	#Opcion de jugar con una paleta contra otro humano
 	def Single_humano():
 		ventana.withdraw()
-		juego = Juego(trampolin.get(),"Single", 1, "humano", ventana)
+		juego = Juego(trampolin.get(),"Single", 1, "humano",ventana)
 		juego.jugar()
 
 	# Opcion de jugar con una paleta contra el CPU
 	def Single_cpu():
 		ventana.withdraw()
-		juego = Juego(trampolin.get(),"Single", 1, "cpu", ventana)
+		juego = Juego(trampolin.get(),"Single", 1, "cpu",ventana)
 		juego.jugar()
 
 	# Opcion de jugar con dos paletas contra otro humano
 	def Double_humano():
 		ventana.withdraw()
-		juego = Juego(trampolin.get(),"Double", 1, "humano", ventana)
+		juego = Juego(trampolin.get(),"Double", 1, "humano",ventana)
 		juego.jugar()
 
 	# Opcion de jugar con dos paletas contra el CPU
 	def Double_cpu():
 		ventana.withdraw()
-		juego = Juego(trampolin.get(),"Double", 1, "cpu", ventana)
+		juego = Juego(trampolin.get(),"Double", 1, "cpu",ventana)
 		juego.jugar()
 
 	# Ventana de informacion de programadores
