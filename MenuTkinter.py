@@ -19,8 +19,8 @@ ENG = 1
 def inicio():
 	global ventana
 	TIEMPO_NIVEL1 = 0.1
-	TIEMPO_NIVEL2 = 0.07
-	TIEMPO_NIVEL3 = 0.04
+	TIEMPO_NIVEL2 = 0.1
+	TIEMPO_NIVEL3 = 0.1
 
 	# Matriz con lista de textos en ingles y español
 	traduccion =[["1 Paleta IA", "1 Racket AI"], #0

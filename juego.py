@@ -10,7 +10,7 @@ import os
 import serial
 
 #Puerto serial de Arduino
-#ser = serial.Serial('/dev/cu.itead-DevB', 9600, timeout=0)
+ser = serial.Serial('/dev/cu.itead-DevB', 9600, timeout=0)
 #ser = serial.Serial('/dev/cu.usbmodem1411', 9600, timeout=0)
 
 BLACK = (0,0,0)
@@ -23,8 +23,8 @@ ANCHO = 800
 LARGO = 500
 
 TIEMPO_NIVEL1 = 0.1
-TIEMPO_NIVEL2 = 0.07
-TIEMPO_NIVEL3 = 0.04
+TIEMPO_NIVEL2 = 0.1
+TIEMPO_NIVEL3 = 0.1
 
 TAMAÑO_BARRA_1 = 9
 TAMAÑO_BARRA_2 = 6
@@ -257,8 +257,8 @@ class Juego:
 			self.dibujar()
 
 			# Lee los estimulos del Arduino
-			#self.leerArduino()
-			#self.sendArduino()
+			self.leerArduino()
+			self.sendArduino()
 
 			# se llama la función cpu solo si la variable CPU es igual a 1
 			if self.CPU == 1:
@@ -295,6 +295,7 @@ class Juego:
 		pygame.display.update()
 
 	def playMusic(self):
+		pygame.init()
 		if self.musicSpeed == 1:
 			back_music = pygame.mixer.music.load(os.path.join("sounds", "music.ogg"))
 		elif self.musicSpeed == 2:
@@ -511,4 +512,4 @@ class Juego:
 				if event.type == pygame.KEYDOWN: #al presionar una tecla
 					if event.key == pygame.K_p:
 						pausado = False
-		pygame.quit()
+	pygame.quit()
